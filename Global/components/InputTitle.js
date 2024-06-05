@@ -1,40 +1,24 @@
 import React from 'react';
-import { View, TextInput, StyleSheet } from 'react-native';
+import { View, TextInput, StyleSheet, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import Colors from '../Branding/colors';
 
-const InputTitle = ({ icon, placeholder, secureTextEntry, keyboardType, value, onChangeText }) => {
+const InputTitle = ({ value }) => {
   return (
-    <View style={styles.container}>
-      <Ionicons name={icon} size={24} color="#6200EE" style={styles.icon} />
-      <TextInput
-        style={styles.input}
-        placeholder={placeholder}
-        secureTextEntry={secureTextEntry}
-        keyboardType={keyboardType}
-        value={value}
-        onChangeText={onChangeText}
-      />
-    </View>
+    <Text style={styles.TxtStyle}>
+      {value}
+    </Text>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#6200EE',
-    marginVertical: 10,
-  },
-  icon: {
-    marginRight: 10,
-  },
-  input: {
-    flex: 1,
-    height: 40,
-    fontSize: 16,
-    color: '#000',
-  },
+TxtStyle:{
+  color:Colors.FontColorI,
+  fontWeight:'bold',
+  fontSize:16,
+  alignSelf:'flex-start',
+  marginLeft:10
+}
 });
 
 export default InputTitle;

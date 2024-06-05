@@ -17,10 +17,10 @@ Container:{
 Header:{
     width:WindowWidth,
     height:WindowHeight/8,
-    backgroundColor:Colors.Dark,
+    backgroundColor:Colors.BgColor,
     alignItems:'center',
-    flexDirection:'row',
-    justifyContent:'space-between',
+    // flexDirection:'row',
+    justifyContent:'center',
     // justifyContent:'center'
 },
 ViewCartButton:{

@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet,Dimensions } from 'react-native';
 import Colors from './Branding/colors';
+import { WindowWidth } from './components/Dimensions';
 
 
 
@@ -16,7 +17,8 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: Colors.PrimaryColor,
     paddingVertical: 12,
-    paddingHorizontal: 32,
+    // paddingHorizontal: 32,
+    width:WindowWidth/1.2,
     borderRadius: 25,
     alignItems: 'center',
     marginVertical: 10,

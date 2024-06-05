@@ -1,15 +1,18 @@
 import React from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import Colors from '../Branding/colors';
+import { WindowWidth } from './Dimensions';
 
-const InputField = ({ icon, placeholder, secureTextEntry, keyboardType, value, onChangeText }) => {
+const InputField = ({ icon, placeholder, secureTextEntry, keyboardType, value, onChangeText ,pressed}) => {
   return (
-    <View style={styles.container}>
-      <Ionicons name={icon} size={24} color="#6200EE" style={styles.icon} />
+    <View style={[styles.container,{borderColor:pressed == true && !value ?Colors.danger:Colors.placeHolder }]}>
+      <Ionicons name={icon} size={24} color={Colors.PrimaryColor} style={styles.icon} />
       <TextInput
         style={styles.input}
         placeholder={placeholder}
         secureTextEntry={secureTextEntry}
+        placeholderTextColor={Colors.placeHolder}
         keyboardType={keyboardType}
         value={value}
         onChangeText={onChangeText}
@@ -22,9 +25,14 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#6200EE',
+    borderWidth: 1,
+    borderColor: Colors.placeHolder,
+    borderRadius:10,
+    backgroundColor:Colors.BgColorII,
     marginVertical: 10,
+    padding:7,
+
+    width:WindowWidth/1.03
   },
   icon: {
     marginRight: 10,
@@ -33,7 +41,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 40,
     fontSize: 16,
-    color: '#000',
+    color: Colors.FontColorI,
   },
 });
 
