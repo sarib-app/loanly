@@ -23,22 +23,12 @@ Header:{
     justifyContent:'center',
     // justifyContent:'center'
 },
-ViewCartButton:{
-  width:WindowWidth/1.2,
-  borderRadius:8,
-  alignSelf:'center',
-  // elevation:4,
-  
-  // shadowColor:Colors.Dark ,
-  height:WindowHeight/18,
-  backgroundColor:Colors.PrimaryColor,
-  justifyContent:'center',
-  alignItems:'center',
-  // flexDirection:'row',
-  // position:'absolute',
-  position:'absolute',
-  bottom:10
+
+RowMaker:{
+flexDirection:'row',
+alignItems:'center'
 },
+
 SmallBtn:{
  
   padding:20,
