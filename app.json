@@ -22,6 +22,14 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "This app requires you to allow photos to use them for verification and other reasons."
+        }
+      ]
+    ]
   }
 }

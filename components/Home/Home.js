@@ -9,9 +9,9 @@ import Colors from '../../Global/Branding/colors';
 import lock from '../../assets/Animationn/lock.json'
 import LottieAnimation from '../../Global/components/LottieAnimation';
 import CustomButton from '../../Global/CustomButton';
-
+import { useNavigation } from '@react-navigation/native';
 const HomeScreen = () => {
-
+const navigation = useNavigation()
   const [KycStatus,setKycStatus]=useState("NA")
   const TxtClr = KycStatus == "pending"?"#FF7700":Colors.danger 
   const bgClr = KycStatus == "pending"?"#F5C49A":"#F5ABAB"
@@ -49,7 +49,7 @@ const HomeScreen = () => {
 </Text>
 <CustomButton 
 title={"Upload Kyc"}
-onPress={{}}
+onPress={()=>navigation.navigate("KycForm")}
 />
     </View>
   );

@@ -5,9 +5,9 @@ import { WindowWidth } from './components/Dimensions';
 
 
 
-const CustomButton = ({ title, onPress }) => {
+const CustomButton = ({ title, onPress ,color}) => {
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
+    <TouchableOpacity style={[styles.button,{backgroundColor:color? color:Colors.PrimaryColor}]} onPress={onPress}>
       <Text style={styles.buttonText}>{title}</Text>
     </TouchableOpacity>
   );

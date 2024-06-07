@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import LoginScreen from '../Auth/Login';
 import SignupScreen from '../Auth/SignUp';
 import BottomNavigation from '../BottomNavigation/BottomNavigation';
+import KycForm from '../KYCForm/KycForm';
 
 
 const Stack = createStackNavigator();
@@ -15,6 +16,7 @@ const AuthStack = () => {
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Signup" component={SignupScreen} options={{ headerShown: false }} />
         <Stack.Screen name="BottomNavigation" component={BottomNavigation} options={{ headerShown: false }} />
+        <Stack.Screen name="KycForm" component={KycForm} options={{ headerShown: false }} />
 
       </Stack.Navigator>
     </NavigationContainer>
