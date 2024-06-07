@@ -26,6 +26,14 @@ CardDesc:{
     fontSize:14,
     color:Colors.FontColorI,
     width:"40%"
+},
+TopLoanCard:{
+  width:WindowWidth,
+  height:WindowHeight/3.7,
+  paddingHorizontal:20,
+  borderBottomLeftRadius:30,
+  borderBottomEndRadius:30,
+  backgroundColor:Colors.PrimaryColor
 }
 
   })

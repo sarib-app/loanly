@@ -16,11 +16,12 @@ Container:{
 },
 Header:{
     width:WindowWidth,
-    height:WindowHeight/8,
+    height:WindowHeight/13,
+    // paddingBottom:-20,
     backgroundColor:Colors.BgColor,
     alignItems:'center',
     // flexDirection:'row',
-    justifyContent:'center',
+    justifyContent:'flex-end',
     // justifyContent:'center'
 },
 

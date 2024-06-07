@@ -11,13 +11,14 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import GlobalStyles from '../Branding/GlobalStyles';
 import { useIsFocused } from '@react-navigation/native';
+import Colors from '../Branding/colors';
 // import YtSearchSuggestions from '../Search/YtSearchSuggestions';
-function Header ({name}){
+function Header ({name,color}){
 const navigation = useNavigation()
 const focused = useIsFocused()
 
   return (
-    <SafeAreaView style={GlobalStyles.Header}>
+    <SafeAreaView style={[GlobalStyles.Header,{backgroundColor:color?color:Colors.BgColor}]}>
      
   
 <Text

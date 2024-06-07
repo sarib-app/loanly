@@ -4,14 +4,13 @@ import GlobalStyles from '../../Global/Branding/GlobalStyles';
 import HeaderScreens from '../../Global/components/HeaderScreens';
 import Header from '../../Global/components/Header';
 import HomeStyles from './HomeStyles';
-import { FontAwesome, Octicons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import Colors from '../../Global/Branding/colors';
 import lock from '../../assets/Animationn/lock.json'
 import LottieAnimation from '../../Global/components/LottieAnimation';
 import CustomButton from '../../Global/CustomButton';
 import { useNavigation } from '@react-navigation/native';
-import KYCform from './KycForm';
-const HomeScreen = () => {
+const KYCform = () => {
 const navigation = useNavigation()
   const [KycStatus,setKycStatus]=useState("NA")
   const TxtClr = KycStatus == "pending"?"#FF7700":Colors.danger 
@@ -19,36 +18,40 @@ const navigation = useNavigation()
   const title = KycStatus ==  "pending"?"KYC submitted":"KYC needs to be uploaded"
   const desc =  KycStatus ==  "pending"?"Our team is reviewing your KYC once they approve it you ill be able to take Loans, Thankyou!":"To proceed with taking loans first you need to upload your KYC, its neccessary to get your kyc approvd first."
   return (
-    <View style={GlobalStyles.Container}>
-        <Header 
-        name={"Dasboard"}
-        color={Colors.PrimaryColor}
-        /> 
-
-
-
-        <View
-        style={HomeStyles.TopLoanCard}
+  <>
+  
+  <View
+        style={[HomeStyles.Card,GlobalStyles.RowMaker,{backgroundColor:bgClr}]}
         >
+<FontAwesome name="warning" size={24} color={TxtClr} />
+<View style={{alignItems:'flex-start',marginLeft:10}}>
 
-<Text style={{color:Colors.inActive}}>
-  Maximum Amount
+<Text style={[HomeStyles.CardTitle,{color:TxtClr}]}>
+  {title}
 </Text>
-<Text style={{fontSize:40,fontWeight:'bold',color:Colors.BgColor}}>
-  INR 50,0000
+<Text style={[HomeStyles.CardDesc,{color:TxtClr}]}>
+  {desc}
 </Text>
-<View
-style={{flexDirection:'row'}}
->
-
-<Octicons name="dot-fill" size={24} color="black" />
-<View></View>
 </View>
+
         </View>
-     {/* <KYCform /> */}
-    </View>
+
+
+        <LottieAnimation
+        source={lock}
+        style={{marginTop:100,marginBottom:30}}
+        animationStyle={{width:200,height:200}}
+        />
+        <Text style={[HomeStyles.CardDesc,{width:"80%",textAlign:'center',marginBottom:30}]}>
+  Your Dashboad is currently locked, it will be opened after your KYC is approved
+</Text>
+<CustomButton 
+title={"Upload Kyc"}
+onPress={()=>navigation.navigate("KycForm")}
+/>
+  </>
   );
 };
 
 
-export default HomeScreen;
+export default KYCform;
