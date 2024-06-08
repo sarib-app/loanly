@@ -3,9 +3,9 @@ import { View, TextInput, StyleSheet, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../Branding/colors';
 
-const InputTitle = ({ value }) => {
+const InputTitle = ({ value,style }) => {
   return (
-    <Text style={styles.TxtStyle}>
+    <Text style={[styles.TxtStyle,style ? style :{}]}>
       {value}
     </Text>
   );

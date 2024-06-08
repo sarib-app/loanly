@@ -5,8 +5,10 @@ import LoginScreen from '../Auth/Login';
 import SignupScreen from '../Auth/SignUp';
 import BottomNavigation from '../BottomNavigation/BottomNavigation';
 import KycForm from '../KYCForm/KycForm';
-
-
+import TakeLoanScreen from '../TakeLoanScreen.js/TakeLoanScreen';
+import LoanHistoryScreen from '../HistoryScreens/LoanHistory';
+import DepositHistoryScreen from '../HistoryScreens/AmountSubmit';
+import Notifications from '../Notifications.js/Notifications';
 const Stack = createStackNavigator();
 
 const AuthStack = () => {
@@ -17,6 +19,10 @@ const AuthStack = () => {
         <Stack.Screen name="Signup" component={SignupScreen} options={{ headerShown: false }} />
         <Stack.Screen name="BottomNavigation" component={BottomNavigation} options={{ headerShown: false }} />
         <Stack.Screen name="KycForm" component={KycForm} options={{ headerShown: false }} />
+        <Stack.Screen name="TakeLoanScreen" component={TakeLoanScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="LoanHistoryScreen" component={LoanHistoryScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="DepositHistoryScreen" component={DepositHistoryScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Notifications" component={Notifications} options={{ headerShown: false }} />
 
       </Stack.Navigator>
     </NavigationContainer>

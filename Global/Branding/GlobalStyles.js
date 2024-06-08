@@ -41,6 +41,16 @@ SmallBtn:{
   margin:10,
   borderRadius:10
 },
+HistoryCard:{
+padding:20,
+width:WindowWidth/1.05,
+backgroundColor:Colors.Dark,
+borderRadius:20,
+marginTop:20
+// alignItems:'flex-start'
+},
+ColumnAligner:{alignItems:'center',marginLeft:10},
+
 Goback:{
 fontSize:18,
 color:Colors.PrimaryColor,
@@ -66,40 +76,7 @@ TextInput:{
   borderWidth:1,
   backgroundColor:Colors.bgIII
 },
-FeedVideoTitle:{
-  color:Colors.FontColorI,
-  fontWeight:'bold',
-  marginLeft:5,
-  marginTop:5
-},
-FeedCard:{
-  width:WindowWidth,
-  paddingBottom:20,
-  // height:WindowHeight/2.8,
-  backgroundColor:Colors.Dark,
-  marginBottom:5
-},
-BottomFeedVidCard:{
-  width:WindowWidth,
-  alignSelf:"center",
-  flexDirection:"row",
-  justifyContent:"space-between",
-  alignItems:"center"
-},
-ShortsCard:{
-  width:WindowWidth,
-  height:WindowHeight/1.13,
-  borderWidth:2,
-  borderBottomColor:"white",
-  flex:1,
-  paddingBottom:20,
-  // height:WindowHeight/2.8,
-  backgroundColor:Colors.send,
-  // alignContent:"center",
-alignItems:"center"
-  // justifyContent:'center'
-  // marginBottom:7
-},
+
 TitleText:{
   color:Colors.FontColorI,
   fontWeight:'600',

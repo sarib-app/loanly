@@ -1,5 +1,6 @@
 const Colors = {
     PrimaryColor:"#B7DFA1",
+    LightPrimary:"rgba(183, 223, 161, 0.4)",
     SeconderyColor:"#AFDFDE",
     placeHolder:"rgba(160,160,160,0.6)",
     inActive:"#666666",
