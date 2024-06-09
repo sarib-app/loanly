@@ -12,7 +12,7 @@ import BillsCard from './BillsCard';
 
 const TakeLoanScreen = () => {
 //   const navigation = useNavigation()
- const [requstLoanAmount,setRequestLoanAmount]=useState(33)
+ const [requstLoanAmount,setRequestLoanAmount]=useState("")
  const [period,setPeriod]=useState(3)
 
 
@@ -74,7 +74,7 @@ keyboardType='numeric'
 placeholderTextColor={"white"}
 keyboardAppearance='light'
 onChangeText={(e)=>onSetLoanSmount(e)}
-// textAlign='center'
+textAlign='center'
 style={{color:Colors.FontColorI,fontSize:35,alignSelf:'center'}}
 />
 

@@ -27,9 +27,10 @@ const HomeScreen = () => {
     <View style={GlobalStyles.Container}>
       <Header
         name={"Dasboard"}
-        color={Colors.PrimaryColor}
+        color={Colors.BgColor}
       />
-<DashboardScreen/>
+<KYCform/>
+{/* <DashboardScreen/> */}
 
     </View>
   );

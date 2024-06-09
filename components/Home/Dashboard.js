@@ -152,7 +152,9 @@ const DashboardScreen = () => {
 
         </View>
         <TouchableOpacity 
-        onPress={()=> navigation.navigate("TakeLoanScreen")}
+        // onPress={()=> navigation.navigate("TakeLoanScreen")}
+        onPress={()=> navigation.navigate("CustomerForm")}
+
         style={HomeStyles.ApplyButton}>
           <Text>
             Apply Now

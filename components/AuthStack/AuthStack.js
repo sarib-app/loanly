@@ -9,6 +9,8 @@ import TakeLoanScreen from '../TakeLoanScreen.js/TakeLoanScreen';
 import LoanHistoryScreen from '../HistoryScreens/LoanHistory';
 import DepositHistoryScreen from '../HistoryScreens/AmountSubmit';
 import Notifications from '../Notifications.js/Notifications';
+import CustomerForm from '../CustomerForm/Customer';
+import PayBackForm from '../PayBack/PayBackScreen';
 const Stack = createStackNavigator();
 
 const AuthStack = () => {
@@ -23,6 +25,8 @@ const AuthStack = () => {
         <Stack.Screen name="LoanHistoryScreen" component={LoanHistoryScreen} options={{ headerShown: false }} />
         <Stack.Screen name="DepositHistoryScreen" component={DepositHistoryScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Notifications" component={Notifications} options={{ headerShown: false }} />
+        <Stack.Screen name="CustomerForm" component={CustomerForm} options={{ headerShown: false }} />
+        <Stack.Screen name="PayBackForm" component={PayBackForm} options={{ headerShown: false }} />
 
       </Stack.Navigator>
     </NavigationContainer>

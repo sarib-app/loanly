@@ -5,7 +5,7 @@ import GlobalStyles from '../../Global/Branding/GlobalStyles';
 import LoanStyles from './LoanStyles';
 import { Entypo, FontAwesome, FontAwesome6, Octicons } from '@expo/vector-icons';
 import Colors from '../../Global/Branding/colors';
-
+import { useNavigation } from '@react-navigation/native';
 
 
 
@@ -17,7 +17,10 @@ import Colors from '../../Global/Branding/colors';
     LoanTaken,
     leftAmount,
     interest
+    
   }) {
+
+    const navigation = useNavigation()
     function RowRecord({
         value, title,
         style
@@ -64,11 +67,14 @@ import Colors from '../../Global/Branding/colors';
               </Text>
             </Text>
           </View>
-          <View style={[LoanStyles.ApplyButtonSmall,{marginTop:10,marginLeft:30}]}>
+          <TouchableOpacity 
+          
+          onPress={()=> navigation.navigate("PayBackForm")}
+          style={[LoanStyles.ApplyButtonSmall,{marginTop:10,marginLeft:30}]}>
               <Text style={{ fontSize: 12, color: Colors.FontColorI }}>
                 Pay
               </Text>
-            </View>
+            </TouchableOpacity>
         </View>
         <View style={[GlobalStyles.RowMaker, { marginTop: 20, justifyContent: 'space-between' }]}>
           <RowRecord
