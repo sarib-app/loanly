@@ -47,7 +47,8 @@ const navigation = useNavigation()
 </Text>
 <CustomButton 
 title={"Upload Kyc"}
-onPress={()=>navigation.navigate("KycForm")}
+onPress={()=> navigation.navigate("CustomerForm")}
+
 />
   </>
   );

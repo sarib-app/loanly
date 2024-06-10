@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import InputField from '../../Global/components/InputField';
 import CustomButton from '../../Global/CustomButton';
 import AuthStyles from './AuthStyles';
 import GlobalStyles from '../../Global/Branding/GlobalStyles';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../../Global/Branding/colors';
+import { RegisterCall } from '../../Global/Calls/ApiCalls';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import LoadingModal from '../../Global/components/LoadingModal';
 
 const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -13,6 +16,47 @@ const SignupScreen = ({ navigation }) => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [isPressed, setIspressed] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+
+
+
+
+
+
+  async function handleRegister(){
+    // navigation.navigate("BottomNavigation")
+    if(phone && password && email && name){
+      Register_Call()
+    }else{
+      setIspressed(((p)=>!p))
+    }
+  }
+  
+  async function Register_Call(){
+    setLoading(true)
+    const result = await RegisterCall(phone,password,email,name)
+  if(result === null){
+    Alert.alert("Error","Someting Went Wrong!")
+    setLoading(false)
+    return null
+  }
+    if(result.status === "200"){
+      AsyncStorage.setItem("user",JSON.stringify(result.user))
+      AsyncStorage.setItem("token",result.token)
+      navigation.navigate("BottomNavigation")
+      setLoading(false)
+  }
+  else if(result.status === "401"){
+      Alert.alert("Error",result.message)
+      setLoading(false)
+  }
+  
+  }
+
+
+
+
 
 
   return (
@@ -55,10 +99,13 @@ const SignupScreen = ({ navigation }) => {
         onChangeText={setPassword}
         pressed={isPressed}
       />
-      <CustomButton title="Sign Up" onPress={() => { /* Handle sign-up logic */ }} />
+      <CustomButton title="Sign Up" onPress={() => { handleRegister() }} />
       <Text style={AuthStyles.signupText} onPress={() => navigation.navigate('Login')}>
         Already have an account? Login
       </Text>
+      <LoadingModal 
+      show={loading}
+      />
     </View>
   );
 };

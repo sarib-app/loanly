@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Platform, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Platform, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import InputField from '../../Global/components/InputField';
@@ -11,8 +11,11 @@ import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import CustomerStyles from './CustomerStyles';
 import Header from '../../Global/components/Header';
 import { WindowWidth } from '../../Global/components/Dimensions';
+import ImageUpload from '../../Global/components/ImageUpload';
+import { useNavigation } from '@react-navigation/native';
 
-const CustomerForm = ({ navigation }) => {
+const CustomerForm = ({  }) => {
+  const navigation = useNavigation()
   const [firstName, setFirstName] = useState('');
   const [middleName, setMiddleName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -23,7 +26,9 @@ const CustomerForm = ({ navigation }) => {
   const [monthlyIncome, setMonthlyIncome] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
   const [isPressed, setIsPressed] = useState(false);
-
+  const [AdharCard, setAdharCard] = useState(null);
+  const [PanCard, setPanCard] = useState(null);
+  const [selfie, setSelfie] = useState(null);
   const handleDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || dateOfBirth;
     setShowDatePicker(Platform.OS === 'ios');
@@ -31,8 +36,87 @@ const CustomerForm = ({ navigation }) => {
   };
 
   const handleSubmit = () => {
-    setIsPressed((prev) => !prev);
+    if(firstName && lastName && middleName && dateOfBirth && address && monthlyIncome && accountNumber && employmentType && AdharCard && selfie && PanCard ){
+
+      postRequest()
+    }else{
+
+      setIsPressed((prev) => !prev);
+    }
   };
+
+
+
+  const postRequest = async () => {
+
+    const formData = new FormData();
+    formData.append('user_id', '3');
+    formData.append('first_name', firstName);
+    formData.append('middle_name', middleName);
+    formData.append('last_name', lastName);
+    formData.append('dob', dateOfBirth.toISOString().split('T')[0]);
+    formData.append('address', address);
+    formData.append('monthly_income', monthlyIncome);
+    formData.append('account_number', accountNumber);
+    formData.append('employment_type', employmentType);
+
+    if (AdharCard) {
+      // const aadharFile = await FileSystem.getInfoAsync(aadharCard);
+      formData.append('aadhar_card_photo', {
+        uri: AdharCard,
+        type: 'image/jpeg',
+        name: 'aadhar_card_photo.jpg',
+      });
+    }
+
+    if (PanCard) {
+      // const panFile = await FileSystem.getInfoAsync(PanCard);
+      formData.append('pan_card_photo', {
+        uri: PanCard,
+        type: 'image/jpeg',
+        name: 'pan_card_photo.jpg',
+      });
+    }
+
+    if (selfie) {
+      // const selfieFile = await FileSystem.getInfoAsync(selfie);
+      formData.append('selfie', {
+        uri: selfie,
+        type: 'image/jpeg',
+        name: 'selfie.jpg',
+      });
+    }
+
+    try {
+      const response = await fetch('https://firstcredit.alphanitesofts.net/api/add_user_add', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      const result = await response.json();
+      if(result.status === "200"){
+        Alert.alert("Success", result.message)
+        navigation.goBack()
+      }else if(result.status === "401"){
+        Alert.alert("Error",result.message)
+      }
+      console.log(result);
+    } catch (error) {
+      Alert.alert("Error", "Something went wrong please try againn later")
+      console.error('Error uploading files:', error);
+    }
+  };
+
+
+
+
+
+
+
+
+
 
   return (
     <View style={GlobalStyles.Container}>
@@ -136,6 +220,33 @@ const CustomerForm = ({ navigation }) => {
         onChangeText={setAccountNumber}
         keyboardType="numeric"
         pressed={isPressed}
+      />
+
+
+
+      <InputTitle 
+      value={"Adhar Card"}
+      />
+      <ImageUpload 
+    //   label={"dd"}
+      onSelect={setAdharCard}
+      value={AdharCard}
+      />
+     <InputTitle 
+      value={"PAN Card"}
+      />
+      <ImageUpload 
+    //   label={"dd"}
+      onSelect={setPanCard}
+      value={PanCard}
+      />
+       <InputTitle 
+      value={"Upload Selfie"}
+      />
+      <ImageUpload 
+    //   label={"dd"}
+      onSelect={setSelfie}
+      value={selfie}
       />
 
       <CustomButton title="Submit Application" onPress={handleSubmit} />

@@ -1,0 +1,31 @@
+{"user_record" : {
+    "kyc_submitted":"NA", 
+    "loan_applied":"NA", 
+    "Loan":{
+    "total_loan_taken": "NA",
+    "total_interest_applied": "NA"
+    
+    },
+    "Deposit":{
+    "toal_deposited":"NA",
+    "total_innterest_given":"NA"
+    }
+    
+    },
+
+//if user have any loan
+    "Active_Loan_Data":{
+        "active_loan_amount":"",
+        "active_interest_applied":"",
+        "paid_amount":"",
+        "pendingg_amount":"",
+        "installment_amount":"",
+        "installment_interest_rate":"",
+        "grace_period_left":""
+
+    }
+
+
+}
+
+    
