@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import GlobalStyles from '../../Global/Branding/GlobalStyles';
 
 import HomeStyles from './HomeStyles';
@@ -8,7 +8,7 @@ import Colors from '../../Global/Branding/colors';
 import { useNavigation } from '@react-navigation/native';
 import { WindowWidth } from '../../Global/components/Dimensions';
 import InputTitle from '../../Global/components/InputTitle';
-const DashboardScreen = ({loanTaken}) => {
+const DashboardScreen = ({loanTaken,loanRec,depositRec}) => {
   const navigation = useNavigation()
 
 
@@ -19,7 +19,9 @@ const DashboardScreen = ({loanTaken}) => {
     subtitle,
     identifier,
     titleII,
-    route
+    route,
+    amount,
+    interest
   }) {
     function RowRecord({
         value, title,
@@ -33,7 +35,7 @@ const DashboardScreen = ({loanTaken}) => {
           <View style={[style,{alignItems:'center'}]}>
     
             <Text style={[HomeStyles.CardTitle]}>
-              {value}
+              {Number(value).toFixed(0)}
             </Text>
             <Text style={[HomeStyles.CardDesc, { width: "100%", fontWeight: '100' }]}>
               {title}
@@ -68,13 +70,13 @@ const DashboardScreen = ({loanTaken}) => {
         </View>
         <View style={[GlobalStyles.RowMaker, { marginTop: 20, justifyContent: 'space-between' }]}>
           <RowRecord
-            value={"₹ 1920000"}
+            value={amount}
             title={titleII}
 
           />
     
           <RowRecord
-            value={"0.3%"}
+            value={interest}
             title={"Total Interest"}
           // style={{marginLeft:20}}
           />
@@ -152,12 +154,22 @@ const DashboardScreen = ({loanTaken}) => {
 
         </View>
         <TouchableOpacity 
-        onPress={()=> navigation.navigate("TakeLoanScreen")}
+        onPress={()=>{
+          navigation.navigate("TakeLoanScreen")
+
+          if(loanTaken === "pending"){
+            
+            Alert.alert("Wait","Please keep patience our team is reviewing your loan request, it will be approved soon.")
+          }else{
+
+            navigation.navigate("TakeLoanScreen")
+          }
+        }}
         // onPress={()=> navigation.navigate("CustomerForm")}
 
         style={HomeStyles.ApplyButton}>
           <Text>
-            Apply Now
+            {loanTaken === "pending"?"In review":"Apply Now"}
           </Text>
         </TouchableOpacity>
 
@@ -172,6 +184,8 @@ const DashboardScreen = ({loanTaken}) => {
         identifier={"Loan"}
         titleII={"Total Loan"}
         route={"LoanHistoryScreen"}
+        amount={loanRec?.total_loan_taken || "--"}
+        interest={loanRec?.total_interest_applied || "--"}
       />
 
       <InputTitle
@@ -184,6 +198,8 @@ const DashboardScreen = ({loanTaken}) => {
         identifier={"Return"}
         titleII={"Total Return"}
         route={"DepositHistoryScreen"}
+        amount={depositRec?.total_deposited }
+        interest={depositRec?.total_interest_given }
 
 
       />

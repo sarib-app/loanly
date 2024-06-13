@@ -15,11 +15,16 @@ import { WindowWidth } from '../../Global/components/Dimensions';
 import InputTitle from '../../Global/components/InputTitle';
 import DashboardScreen from './Dashboard';
 import { userDasboardStats } from '../../Global/Calls/ApiCalls';
+import InitialLoading from '../../Global/components/InitialLoading';
 const HomeScreen = () => {
   const navigation = useNavigation()
   const focused = useIsFocused()
   const [KycStatus, setKycStatus] = useState("NA")
   const [loanTaken,setLoanTaken] = useState("NA")
+  const [loanRec,setLoanrec] = useState(null)
+  const [depositRec,setDepositRec] = useState(null)
+
+  const [loading,setLoading] = useState(true)
 
 
 useEffect(()=>{
@@ -29,7 +34,11 @@ if(res != null){
   console.log(res.user_record)
   setKycStatus(res.user_record.kyc_submitted)
   setLoanTaken(res.user_record.loan_applied)
+  setLoading(false)
+  setLoanrec(res.user_record.Loan)
+  setDepositRec(res.user_record.Deposit)
 }
+setLoading(false)
 }
 getDashboardData()
 
@@ -44,7 +53,10 @@ getDashboardData()
         color={KycStatus === "approved"? Colors.PrimaryColor:Colors.BgColor}
       />
 
-
+{
+  loading === true ?
+  <InitialLoading/>:
+  <>
       {
         KycStatus != "approved" ?
 <KYCform
@@ -53,7 +65,12 @@ kycStat={KycStatus}
 :
 <DashboardScreen
 loanTaken={loanTaken}
+loanRec={loanRec}
+depositRec={depositRec}
 />
+}
+
+</>
 }
 
     </View>

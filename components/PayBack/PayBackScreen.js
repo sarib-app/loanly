@@ -13,8 +13,11 @@ import Header from '../../Global/components/Header';
 import { WindowWidth } from '../../Global/components/Dimensions';
 import ImageUpload from '../../Global/components/ImageUpload';
 
-const PayBackForm = ({ navigation }) => {
+const PayBackForm = ({ route }) => {
+const {identifier} = route.params
+const {leftAmount} = route.params
 
+// console.log(identifier)
  
   const [AccountType, setAccountType] = useState('');
   const [ReturnAmount, setReturnAmount] = useState('');
@@ -33,7 +36,7 @@ const PayBackForm = ({ navigation }) => {
     <View style={GlobalStyles.Container}>
       <Header name={"Give All Details"} />
       <ScrollView
-      contentContainerStyle={{alignItems:'center'}}
+      contentContainerStyle={{alignItems:'center',width:WindowWidth}}
       >
 
       <View style={[PayBackStyles.Card, GlobalStyles.RowMaker, { backgroundColor: Colors.PrimaryColor }]}>
@@ -78,7 +81,8 @@ const PayBackForm = ({ navigation }) => {
       <InputField
         icon="cash-outline"
         placeholder="Monthly Income"
-        value={ReturnAmount}
+        value={leftAmount}
+        editable={false}
         onChangeText={setReturnAmount}
         keyboardType="numeric"
         pressed={isPressed}

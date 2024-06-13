@@ -56,20 +56,20 @@ import { useNavigation } from '@react-navigation/native';
               <FontAwesome6 name="money-bill-trend-up" size={24}  color={Colors.SeconderyColor} />
             }
           </View>
-          <View style={{ marginLeft: 10 }}>
+          <View style={{ marginLeft: 10,width:"55%" }}>
 
             <Text style={[LoanStyles.CardTitle]}>
               {title}
             </Text>
             <Text style={[LoanStyles.CardDesc, { width: "100%", fontWeight: '100' }]}>
               {subtitle} <Text style={{color:Colors.danger}}>
-              ₹ {leftAmount}
+              ₹ {identifier === "Full" ? leftAmount:"Enter"}
               </Text>
             </Text>
           </View>
           <TouchableOpacity 
           
-          onPress={()=> navigation.navigate("PayBackForm")}
+          onPress={()=> navigation.navigate("PayBackForm",{identifier:identifier,leftAmount:leftAmount})}
           style={[LoanStyles.ApplyButtonSmall,{marginTop:10,marginLeft:30}]}>
               <Text style={{ fontSize: 12, color: Colors.FontColorI }}>
                 Pay

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert ,TextInput} from 'react-native';
 import GlobalStyles from '../../Global/Branding/GlobalStyles';
 import Header from '../../Global/components/Header';
@@ -8,14 +8,46 @@ import { Entypo } from '@expo/vector-icons';
 import InputField from '../../Global/components/InputField';
 import InputTitle from '../../Global/components/InputTitle';
 import BillsCard from './BillsCard';
-import { ApplyLoan } from '../../Global/Calls/ApiCalls';
-import { useNavigation } from '@react-navigation/native';
+import { ApplyLoan, userDasboardStats } from '../../Global/Calls/ApiCalls';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import LoadingModal from '../../Global/components/LoadingModal';
+import InitialLoading from '../../Global/components/InitialLoading';
+
 
 
 const TakeLoanScreen = () => {
   const navigation = useNavigation()
+  const focused= useIsFocused()
  const [requstLoanAmount,setRequestLoanAmount]=useState("")
  const [period,setPeriod]=useState(3)
+ const [loading,setLoading]=useState(false)
+ const [InittialLoaderState,setInittialLoaderState]=useState(true)
+
+ const [loanTaken,setLoanTaken] = useState("NA")
+
+ const [loanRec,setLoanrec] = useState(null)
+
+
+
+
+
+ useEffect(()=>{
+    async function getDashboardData(){
+      const res= await userDasboardStats("5")
+    if(res != null){
+  setLoanTaken(res.user_record.loan_applied)
+  setLoanrec(res.Active_Loan_Data)
+    
+    }
+    setInittialLoaderState(false)
+    }
+    getDashboardData()
+    
+    },[focused])
+
+
+
+
 
 
 
@@ -46,16 +78,24 @@ if(requstLoanAmount+1 <= 150000){
  }
 
  async function onApplyLoan(){
-  const res = await ApplyLoan("5",requstLoanAmount,period)
+setLoading(true)
+if(!requstLoanAmount,!period){
+    return
+}
+const duration = period*30
+
+  const res = await ApplyLoan("5",requstLoanAmount,duration)
+  console.log(res)
   if(res){
 if(res === "200"){
     Alert.alert("Congratulations","You have successfully obtained loan!")
     navigation.goBack()
+    setLoading(false)
 }
 else{
-    Alert.alert("Failed","You have successfully obtained loan!")
+    Alert.alert("Failed",res.message)
 
-
+    setLoading(false)
 }
   }
  }
@@ -66,6 +106,14 @@ else{
         name={"Loan Screen"}
         // color={Colors.PrimaryColor}
       />
+
+
+{
+
+    InittialLoaderState ?
+    <InitialLoading />
+:
+<>
 <View style={LoanStyles.TopLoanCard}>
 
 
@@ -142,18 +190,45 @@ style={LoanStyles.TopIconWrapper}>
     
 
         </View>
+
+        {
+            loanTaken == "NA"&&
         <TouchableOpacity
-        style={LoanStyles.ApplyButton}
-        onPress={()=> onApplyLoan()}
+        style={[LoanStyles.ApplyButton]}
+        onPress={()=> {
+            
+            if(requstLoanAmount){
+                onApplyLoan()
+
+            }else{
+                Alert.alert("Sorry","Please enter an amount to take loan")
+            }
+        
+        
+        }}
         >
  <Text style={{}}>
               Apply Now
             </Text>
         </TouchableOpacity>
-        <Text style={{color:Colors.inActive,
-            alignSelf:'center',
-            marginTop:10
-        }}>3000 will be charged per day after 40 days</Text>
+        }
+
+{
+    loanTaken !="NA"?
+
+    <Text style={{color:Colors.danger,
+        alignSelf:'center',
+        marginTop:10,
+        textAlign:'center'
+    }}>You already have pending or approved loan request</Text>
+    :
+    <Text style={{color:Colors.inActive,
+        alignSelf:'center',
+        marginTop:10
+    }}>3000 will be charged per day after 40 days</Text>
+}
+
+      
 
 </View>
 <InputTitle 
@@ -169,9 +244,9 @@ title={"Full Payment"}
 subtitle={"Pay full amount: "}
 identifier={"Full"}
 titleII={"Amount Left"}
-LoanTaken={"192030"}
-leftAmount="192030"
-interest="0.3"
+LoanTaken={loanRec?.active_loan_amount }
+leftAmount={loanRec?.pending_amount }
+interest={loanRec?.active_interest_applied}
 
 />
 
@@ -180,12 +255,18 @@ interest="0.3"
 title={"Partial Payment"}
 subtitle={"Pay Installment of: "}
 identifier={"Installment"}
-titleII={"Amount Left"}
-LoanTaken={"192030"}
-leftAmount="1920"
-interest="0.3"
+titleII={"Amount Paid"}
+LoanTaken={loanRec?.active_loan_amount }
+leftAmount={loanRec?.paid_amount}
+interest={loanRec?.active_interest_applied }
 
 />
+</>
+}
+<LoadingModal 
+show={loading}
+/>
+
     </View>
   );
 };
