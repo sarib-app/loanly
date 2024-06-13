@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Platform, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Platform, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import InputField from '../../Global/components/InputField';
@@ -12,16 +12,19 @@ import PayBackStyles from './PayBack';
 import Header from '../../Global/components/Header';
 import { WindowWidth } from '../../Global/components/Dimensions';
 import ImageUpload from '../../Global/components/ImageUpload';
+import { useNavigation } from '@react-navigation/native';
 
 const PayBackForm = ({ route }) => {
 const {identifier} = route.params
 const {leftAmount} = route.params
+const {LoanTaken} = route.params
 
+const navigation = useNavigation()
 // console.log(identifier)
  
   const [AccountType, setAccountType] = useState('');
-  const [ReturnAmount, setReturnAmount] = useState('');
-  const [accountNumber, setAccountNumber] = useState('');
+  const [ReturnAmount, setReturnAmount] = useState(identifier === "Full"?leftAmount:0);
+  const [TransactionId, setTransactionId] = useState('');
   const [invoice, setinvoice] = useState(null);
 
   const [isPressed, setIsPressed] = useState(false);
@@ -30,7 +33,31 @@ const {leftAmount} = route.params
 
   const handleSubmit = () => {
     setIsPressed((prev) => !prev);
+
+    if(AccountType && ReturnAmount && TransactionId) {
+
+      submitReturn()
+
+    }else{
+      setIsPressed(true)
+    }
   };
+
+async function submitReturn(){
+  
+const res = await ReturnAmount("5","8",LoanTaken,TransactionId,ReturnAmount,identifier)
+if(res){
+  if(res === "200"){
+    Alert.alert("Paid","Amount paid request is generated it will be approved soon")
+    navigation.goBack()
+  }
+  else{
+    Alert.alert("Not Paid",res.message)
+
+  }
+}
+}
+
 
   return (
     <View style={GlobalStyles.Container}>
@@ -80,9 +107,9 @@ const {leftAmount} = route.params
       <InputTitle value="Return Amount" />
       <InputField
         icon="cash-outline"
-        placeholder="Monthly Income"
-        value={leftAmount}
-        editable={false}
+        placeholder="The amount your wanna pay"
+        value={identifier === "Full" ? leftAmount:ReturnAmount}
+        editable={identifier === "Full" ? false :true}
         onChangeText={setReturnAmount}
         keyboardType="numeric"
         pressed={isPressed}
@@ -91,9 +118,9 @@ const {leftAmount} = route.params
       <InputTitle value="Transaction ID" />
       <InputField
         icon="card-outline"
-        placeholder="Account Number"
-        value={accountNumber}
-        onChangeText={setAccountNumber}
+        placeholder="Transaction ID"
+        value={TransactionId}
+        onChangeText={setTransactionId}
         keyboardType="numeric"
         pressed={isPressed}
       />

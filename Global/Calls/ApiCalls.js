@@ -135,4 +135,47 @@ return null
 }
 
 
+
+
+
+
+
+
+
+async function ReturnAmount(uid,l_id,amount,transaction_id,amount_paid,pay_type){
+
+  const formdata = new FormData();
+formdata.append("user_id", uid);
+formdata.append("loan_id", l_id);
+formdata.append("loan_amount", amount);
+formdata.append("transaction_id",transaction_id);
+formdata.append("amount_paid", amount_paid);
+formdata.append("amount_paid_type", pay_type);
+
+const requestOptions = {
+  method: "POST",
+  body: formdata,
+  redirect: "follow"
+};
+
+try{
+
+  const response = await fetch(`${BaseUrl}submit-transaction`,requestOptions)
+  const result = await response.json()
+ 
+  return result
+
+}
+catch(e){
+  console.log(e)
+Alert.alert("Error","Somethig Went Wrong, Try again later")
+return null
+
+}
+
+}
+
+
+
+
 export {Login_Call,RegisterCall,userDasboardStats,ApplyLoan}

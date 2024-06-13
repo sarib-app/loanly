@@ -247,6 +247,7 @@ titleII={"Amount Left"}
 LoanTaken={loanRec?.active_loan_amount }
 leftAmount={loanRec?.pending_amount }
 interest={loanRec?.active_interest_applied}
+loanStat={loanTaken}
 
 />
 
@@ -259,6 +260,8 @@ titleII={"Amount Paid"}
 LoanTaken={loanRec?.active_loan_amount }
 leftAmount={loanRec?.paid_amount}
 interest={loanRec?.active_interest_applied }
+loanStat={loanTaken}
+
 
 />
 </>

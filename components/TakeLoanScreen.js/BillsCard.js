@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import GlobalStyles from '../../Global/Branding/GlobalStyles';
 
 import LoanStyles from './LoanStyles';
@@ -16,7 +16,9 @@ import { useNavigation } from '@react-navigation/native';
     titleII,
     LoanTaken,
     leftAmount,
-    interest
+    interest,
+    loanStat
+
     
   }) {
 
@@ -69,7 +71,17 @@ import { useNavigation } from '@react-navigation/native';
           </View>
           <TouchableOpacity 
           
-          onPress={()=> navigation.navigate("PayBackForm",{identifier:identifier,leftAmount:leftAmount})}
+          onPress={()=> {
+            if(loanStat === "approved"){
+
+              navigation.navigate("PayBackForm",{identifier:identifier,leftAmount:leftAmount,LoanTaken:LoanTaken})
+            
+            }else{
+              Alert.alert("No Active Loan","You do not have any active loan, please take a loan first.")
+            }
+            }
+          
+          }
           style={[LoanStyles.ApplyButtonSmall,{marginTop:10,marginLeft:30}]}>
               <Text style={{ fontSize: 12, color: Colors.FontColorI }}>
                 Pay

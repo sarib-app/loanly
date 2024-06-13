@@ -4,7 +4,8 @@ import { Ionicons } from '@expo/vector-icons';
 import Colors from '../Branding/colors';
 import { WindowWidth } from './Dimensions';
 
-const InputField = ({ icon, placeholder, secureTextEntry, keyboardType, value, onChangeText ,pressed}) => {
+const InputField = ({ icon, placeholder, secureTextEntry, keyboardType, value, editable,onChangeText ,pressed
+}) => {
   return (
     <View style={[styles.container,{borderColor:pressed == true && !value ?Colors.danger:Colors.placeHolder }]}>
       <Ionicons name={icon} size={24} color={Colors.PrimaryColor} style={styles.icon} />
@@ -12,6 +13,7 @@ const InputField = ({ icon, placeholder, secureTextEntry, keyboardType, value, o
         style={styles.input}
         placeholder={placeholder}
         secureTextEntry={secureTextEntry}
+        editable={editable?editable:true}
         placeholderTextColor={Colors.placeHolder}
         keyboardType={keyboardType}
         value={value}
