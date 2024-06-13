@@ -9,10 +9,11 @@ import InputField from '../../Global/components/InputField';
 import InputTitle from '../../Global/components/InputTitle';
 import BillsCard from './BillsCard';
 import { ApplyLoan } from '../../Global/Calls/ApiCalls';
+import { useNavigation } from '@react-navigation/native';
 
 
 const TakeLoanScreen = () => {
-//   const navigation = useNavigation()
+  const navigation = useNavigation()
  const [requstLoanAmount,setRequestLoanAmount]=useState("")
  const [period,setPeriod]=useState(3)
 
@@ -46,6 +47,17 @@ if(requstLoanAmount+1 <= 150000){
 
  async function onApplyLoan(){
   const res = await ApplyLoan("5",requstLoanAmount,period)
+  if(res){
+if(res === "200"){
+    Alert.alert("Congratulations","You have successfully obtained loan!")
+    navigation.goBack()
+}
+else{
+    Alert.alert("Failed","You have successfully obtained loan!")
+
+
+}
+  }
  }
 
   return (
