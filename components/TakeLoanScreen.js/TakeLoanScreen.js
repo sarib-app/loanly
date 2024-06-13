@@ -8,6 +8,7 @@ import { Entypo } from '@expo/vector-icons';
 import InputField from '../../Global/components/InputField';
 import InputTitle from '../../Global/components/InputTitle';
 import BillsCard from './BillsCard';
+import { ApplyLoan } from '../../Global/Calls/ApiCalls';
 
 
 const TakeLoanScreen = () => {
@@ -43,6 +44,10 @@ if(requstLoanAmount+1 <= 150000){
 }
  }
 
+ async function onApplyLoan(){
+  const res = await ApplyLoan("5",requstLoanAmount,period)
+ }
+
   return (
     <View style={GlobalStyles.Container}>
       <Header
@@ -57,7 +62,7 @@ if(requstLoanAmount+1 <= 150000){
         </Text>
         <Text style={{ color: Colors.placeHolder }}>
           Maximum Amount: ₹ 150,000
-        </Text>
+        </Text>    
 
         <View style={[GlobalStyles.RowMaker,{marginTop:10,justifyContent:"space-between",marginBottom:10}]}>
 <TouchableOpacity 
@@ -127,6 +132,7 @@ style={LoanStyles.TopIconWrapper}>
         </View>
         <TouchableOpacity
         style={LoanStyles.ApplyButton}
+        onPress={()=> onApplyLoan()}
         >
  <Text style={{}}>
               Apply Now

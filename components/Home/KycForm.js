@@ -10,9 +10,10 @@ import lock from '../../assets/Animationn/lock.json'
 import LottieAnimation from '../../Global/components/LottieAnimation';
 import CustomButton from '../../Global/CustomButton';
 import { useNavigation } from '@react-navigation/native';
-const KYCform = () => {
+const KYCform = ({kycStat}) => {
+  console.log(kycStat)
 const navigation = useNavigation()
-  const [KycStatus,setKycStatus]=useState("NA")
+  const [KycStatus,setKycStatus]=useState(kycStat)
   const TxtClr = KycStatus == "pending"?"#FF7700":Colors.danger 
   const bgClr = KycStatus == "pending"?"#F5C49A":"#F5ABAB"
   const title = KycStatus ==  "pending"?"KYC submitted":"KYC needs to be uploaded"

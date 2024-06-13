@@ -67,4 +67,72 @@ return null
 }
 
 
-export {Login_Call,RegisterCall}
+
+
+
+
+
+
+async function userDasboardStats(uid){
+
+  const formdata = new FormData();
+  formdata.append("user_id", "5");
+
+  const requestOptions = {
+    method: "POST",
+    body: formdata,
+    redirect: "follow"
+  }
+
+try{
+
+  const response = await fetch(`${BaseUrl}user-loan-record`,requestOptions)
+  const result = await response.json()
+ 
+  return result
+
+}
+catch(e){
+  console.log(e)
+Alert.alert("Error","Somethig Went Wrong, Try again later")
+return null
+
+}
+
+}
+
+
+
+
+async function ApplyLoan(uid,amount,duration){
+
+  const formdata = new FormData();
+  formdata.append("user_id", "5");
+  formdata.append("loan_amount", amount);
+  formdata.append("duration", duration);
+  
+  const requestOptions = {
+    method: "POST",
+    body: formdata,
+    redirect: "follow"
+  };
+
+try{
+
+  const response = await fetch(`${BaseUrl}applyLoan`,requestOptions)
+  const result = await response.json()
+ 
+  return result
+
+}
+catch(e){
+  console.log(e)
+Alert.alert("Error","Somethig Went Wrong, Try again later")
+return null
+
+}
+
+}
+
+
+export {Login_Call,RegisterCall,userDasboardStats,ApplyLoan}

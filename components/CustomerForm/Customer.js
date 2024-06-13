@@ -13,6 +13,7 @@ import Header from '../../Global/components/Header';
 import { WindowWidth } from '../../Global/components/Dimensions';
 import ImageUpload from '../../Global/components/ImageUpload';
 import { useNavigation } from '@react-navigation/native';
+import LoadingModal from '../../Global/components/LoadingModal';
 
 const CustomerForm = ({  }) => {
   const navigation = useNavigation()
@@ -26,6 +27,8 @@ const CustomerForm = ({  }) => {
   const [monthlyIncome, setMonthlyIncome] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
   const [isPressed, setIsPressed] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const [AdharCard, setAdharCard] = useState(null);
   const [PanCard, setPanCard] = useState(null);
   const [selfie, setSelfie] = useState(null);
@@ -48,9 +51,9 @@ const CustomerForm = ({  }) => {
 
 
   const postRequest = async () => {
-
+    setLoading(true)
     const formData = new FormData();
-    formData.append('user_id', '3');
+    formData.append('user_id', '5');
     formData.append('first_name', firstName);
     formData.append('middle_name', middleName);
     formData.append('last_name', lastName);
@@ -106,6 +109,9 @@ const CustomerForm = ({  }) => {
     } catch (error) {
       Alert.alert("Error", "Something went wrong please try againn later")
       console.error('Error uploading files:', error);
+    }
+    finally{
+      setLoading(false)
     }
   };
 
@@ -250,6 +256,9 @@ const CustomerForm = ({  }) => {
       />
 
       <CustomButton title="Submit Application" onPress={handleSubmit} />
+      <LoadingModal 
+      show={loading}
+      />
       </ScrollView>
 
     </View>

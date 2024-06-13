@@ -8,7 +8,7 @@ import Colors from '../../Global/Branding/colors';
 import { useNavigation } from '@react-navigation/native';
 import { WindowWidth } from '../../Global/components/Dimensions';
 import InputTitle from '../../Global/components/InputTitle';
-const DashboardScreen = () => {
+const DashboardScreen = ({loanTaken}) => {
   const navigation = useNavigation()
 
 
@@ -124,11 +124,11 @@ const DashboardScreen = () => {
           style={{ flexDirection: 'row', alignItems: 'center' }}
         >
 
-          <Octicons name="dot-fill" size={24} color={Colors.BgColor} />
-          <View style={{ width: WindowWidth / 2.5, borderWidth: 1, borderColor: Colors.inActive }} />
-          <Octicons name="dot-fill" size={24} color={Colors.inActive} />
-          <View style={{ width: WindowWidth / 2.5, borderWidth: 1, borderColor: Colors.inActive }} />
-          <Octicons name="dot-fill" size={24} color={Colors.inActive} />
+          <Octicons name="dot-fill" size={24} color={Colors.deposit} />
+          <View style={{ width: WindowWidth / 2.5, borderWidth: 1, borderColor:  loanTaken === "NA" ?Colors.inActive:Colors.deposit }} />
+          <Octicons name="dot-fill" size={24} color={ loanTaken === "NA" ?Colors.inActive:Colors.deposit } />
+          <View style={{ width: WindowWidth / 2.5, borderWidth: 1, borderColor:  loanTaken === "NA" || loanTaken === "pending" ?Colors.inActive:Colors.deposit  }} />
+          <Octicons name="dot-fill" size={24} color={loanTaken === "NA" || loanTaken === "pending" ?Colors.inActive:Colors.deposit} />
 
         </View>
 
