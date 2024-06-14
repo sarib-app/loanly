@@ -52,8 +52,8 @@ const TakeLoanScreen = () => {
             const res= await userDasboardStats(userData.id)
             console.log(res)
           if(res != null){
-        setLoanTaken(res.user_record.loan_applied)
-        setLoanrec(res.Active_Loan_Data)
+          setLoanTaken(res.response.user_record.loan_applied)
+          setLoanrec(res.response.Active_Loan_Data)
           
           }
           setInittialLoaderState(false)
@@ -147,8 +147,9 @@ style={LoanStyles.TopIconWrapper}>
 value={String(requstLoanAmount)}
 placeholder='₹ 0'
 keyboardType='numeric'
-placeholderTextColor={"white"}
+placeholderTextColor={Colors.FontColorI}
 keyboardAppearance='light'
+cursorColor={Colors.PrimaryColor}
 onChangeText={(e)=>onSetLoanSmount(e)}
 textAlign='center'
 style={{color:Colors.FontColorI,fontSize:35,alignSelf:'center'}}
@@ -171,9 +172,9 @@ style={LoanStyles.TopIconWrapper}>
         <TouchableOpacity 
         onPress={()=> setPeriod(3)}
         style={[LoanStyles.ApplyButtonSmall,{
-            backgroundColor:period === 3 ? Colors.deposit:Colors.inActive
+            backgroundColor:period === 3 ? Colors.deposit:Colors.BgColorII
         }]}>
-<Text style={{color:"white"}}>
+<Text style={{color:period === 3 ? Colors.BgColor:Colors.placeHolder}}>
     3 months
 </Text>
         </TouchableOpacity>
@@ -181,9 +182,9 @@ style={LoanStyles.TopIconWrapper}>
         <TouchableOpacity 
         onPress={()=> setPeriod(6)}
         style={[LoanStyles.ApplyButtonSmall,{
-            backgroundColor:period === 6 ? Colors.deposit:Colors.inActive
+            backgroundColor:period === 6 ? Colors.deposit:Colors.BgColorII
         }]}>
-<Text style={{color:"white"}}>
+<Text style={{color:period === 6 ? Colors.BgColor:Colors.placeHolder}}>
     6 months
 </Text>
         </TouchableOpacity>
@@ -191,9 +192,9 @@ style={LoanStyles.TopIconWrapper}>
         <TouchableOpacity 
         onPress={()=> setPeriod(12)}
         style={[LoanStyles.ApplyButtonSmall,{
-            backgroundColor:period === 12 ? Colors.deposit:Colors.inActive
+            backgroundColor:period === 12 ? Colors.deposit:Colors.BgColorII
         }]}>
-<Text style={{color:"white"}}>
+<Text style={{color:period === 12 ? Colors.BgColor:Colors.placeHolder}}>
     12 months
 </Text>
         </TouchableOpacity>
@@ -218,7 +219,7 @@ style={LoanStyles.TopIconWrapper}>
         
         }}
         >
- <Text style={{}}>
+ <Text style={{color:Colors.BgColor}}>
               Apply Now
             </Text>
         </TouchableOpacity>
@@ -227,15 +228,10 @@ style={LoanStyles.TopIconWrapper}>
 {
     loanTaken !="NA"?
 
-    <Text style={{color:Colors.danger,
-        alignSelf:'center',
-        marginTop:10,
-        textAlign:'center'
+    <Text style={{color:Colors.danger,fontSize:12,fontWeight:'600',alignSelf:'center',textAlign:"center"
     }}>You already have pending or approved loan request</Text>
     :
-    <Text style={{color:Colors.inActive,
-        alignSelf:'center',
-        marginTop:10
+    <Text style={{color:Colors.danger,fontSize:12,fontWeight:'600',alignSelf:'center',textAlign:"center"
     }}>3000 will be charged per day after 40 days</Text>
 }
 
@@ -244,10 +240,10 @@ style={LoanStyles.TopIconWrapper}>
 </View>
 <InputTitle 
 value={"Unpaid Bills"}
-style={{marginLeft:30,margin:10}}
+style={{marginLeft:30,margin:10,marginBottom:0,fontSize:16}}
 />
 
-<Text style={{color:Colors.danger}}>Interest will be charged after 30 days "28 days Left"</Text>
+{/* <Text style={{color:Colors.danger,fontSize:12,fontWeight:'600'}}>Interest will be charged after 30 days "28 days Left"</Text> */}
 
 <BillsCard 
 

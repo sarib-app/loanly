@@ -22,10 +22,10 @@ CardTitle:{
     color:Colors.FontColorI
 },
 CardDesc:{
-    fontWeight:'400',
-    fontSize:14,
-    color:Colors.FontColorI,
-    width:"40%"
+  fontWeight:'600',
+    fontSize:12,
+    color:Colors.placeHolder,
+    width:"40%",
 },
 TopLoanCard:{
   width:WindowWidth,
@@ -51,8 +51,8 @@ ApplyButtonSmall:{
   // width:100,
   // height:50,
   paddingVertical:10,
-  paddingHorizontal:30,
-  backgroundColor:Colors.deposit,
+  paddingHorizontal:20,
+  backgroundColor:Colors.LightPrimary,
   borderWidth:1,
   borderColor:Colors.BgColor,
   borderRadius:10,

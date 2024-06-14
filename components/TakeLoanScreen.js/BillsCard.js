@@ -37,7 +37,7 @@ import { useNavigation } from '@react-navigation/native';
             <Text style={[LoanStyles.CardTitle]}>
               {value}
             </Text>
-            <Text style={[LoanStyles.CardDesc, { width: "100%", fontWeight: '100' }]}>
+            <Text style={[LoanStyles.CardDesc, { width: "100%" }]}>
               {title}
             </Text>
           </View>
@@ -48,14 +48,14 @@ import { useNavigation } from '@react-navigation/native';
     
 
     return (
-      <View style={LoanStyles.Card}>
+      <View style={[LoanStyles.Card]}>
         <View style={GlobalStyles.RowMaker}>
 
-          <View style={{ padding: 10, borderRadius: 1000, backgroundColor: Colors.inActive }}>
+          <View style={{ padding: 10, borderRadius: 1000, backgroundColor: Colors.SeconderyColor }}>
             {
               identifier === "Full"?
               <Entypo name="credit-card" size={24} color={Colors.PrimaryColor} />:
-              <FontAwesome6 name="money-bill-trend-up" size={24}  color={Colors.SeconderyColor} />
+              <FontAwesome6 name="money-bill-trend-up" size={24}  color={Colors.LightPrimary} />
             }
           </View>
           <View style={{ marginLeft: 10,width:"55%" }}>
@@ -63,7 +63,7 @@ import { useNavigation } from '@react-navigation/native';
             <Text style={[LoanStyles.CardTitle]}>
               {title}
             </Text>
-            <Text style={[LoanStyles.CardDesc, { width: "100%", fontWeight: '100' }]}>
+            <Text style={[LoanStyles.CardDesc, { width: "100%" }]}>
               {subtitle} <Text style={{color:Colors.danger}}>
               ₹ {identifier === "Full" ? leftAmount:"Enter"}
               </Text>
@@ -72,7 +72,7 @@ import { useNavigation } from '@react-navigation/native';
           <TouchableOpacity 
           
           onPress={()=> {
-            // navigation.navigate("PayBackForm",{identifier:identifier,leftAmount:leftAmount,LoanTaken:LoanTaken})
+            navigation.navigate("PayBackForm",{identifier:identifier,leftAmount:leftAmount,LoanTaken:LoanTaken})
 
             if(loanStat === "approved"){
 
@@ -85,7 +85,7 @@ import { useNavigation } from '@react-navigation/native';
           
           }
           style={[LoanStyles.ApplyButtonSmall,{marginTop:10,marginLeft:30}]}>
-              <Text style={{ fontSize: 12, color: Colors.FontColorI }}>
+              <Text style={{ fontSize: 12, color: Colors.BgColor }}>
                 Pay
               </Text>
             </TouchableOpacity>
@@ -172,7 +172,7 @@ export default BillsCard;
 //             <Text style={[LoanStyles.CardTitle]}>
 //               {value}
 //             </Text>
-//             <Text style={[LoanStyles.CardDesc, { width: "100%", fontWeight: '100' }]}>
+//             <Text style={[LoanStyles.CardDesc, { width: "100%" }]}>
 //               {title}
 //             </Text>
 //           </View>
@@ -198,7 +198,7 @@ export default BillsCard;
 //             <Text style={[HomeStyles.CardTitle]}>
 //               {title}
 //             </Text>
-//             <Text style={[HomeStyles.CardDesc, { width: "100%", fontWeight: '100' }]}>
+//             <Text style={[HomeStyles.CardDesc, { width: "100%" }]}>
 //               {subtitle}
 //             </Text>
 //           </View>

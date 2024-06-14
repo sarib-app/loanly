@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
 TxtStyle:{
   color:Colors.FontColorI,
   fontWeight:'bold',
-  fontSize:16,
+  fontSize:14,
   alignSelf:'flex-start',
   marginLeft:10
 }

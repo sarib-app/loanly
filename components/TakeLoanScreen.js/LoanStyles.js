@@ -23,10 +23,10 @@ CardTitle:{
     color:Colors.FontColorI
 },
 CardDesc:{
-    fontWeight:'400',
-    fontSize:14,
-    color:Colors.FontColorI,
-    width:"40%"
+  fontWeight:'600',
+  fontSize:12,
+  color:Colors.placeHolder,
+  width:"40%",
 },
 TopLoanCard:{
   width:WindowWidth/1.05,
@@ -37,7 +37,7 @@ TopLoanCard:{
   backgroundColor:Colors.Dark
 },
 TopCardTitle:{ fontSize: 20, fontWeight: 'bold', color: Colors.FontColorI },
-TopIconWrapper:{padding:12,backgroundColor:Colors.bgIv,borderRadius:5,justifyContent:'center',alignItems:'center'},
+TopIconWrapper:{padding:12,backgroundColor:Colors.SeconderyColor,borderRadius:5,justifyContent:'center',alignItems:'center'},
 
 ApplyButton:{
   width:100,

@@ -43,12 +43,12 @@ const HomeScreen = () => {
         async function getDashboardData(userData){
           const res= await userDasboardStats(userData.id)
         if(res != null){
-          console.log(res.user_record)
-          setKycStatus(res.user_record.kyc_submitted)
-          setLoanTaken(res.user_record.loan_applied)
+          console.log(res.response.user_record)
+          setKycStatus(res.response.user_record.kyc_submitted)
+          setLoanTaken(res.response.user_record.loan_applied)
           setLoading(false)
-          setLoanrec(res.user_record.Loan)
-          setDepositRec(res.user_record.Deposit)
+          setLoanrec(res.response.user_record.Loan)
+          setDepositRec(res.response.user_record.Deposit)
         }
         // setLoading(false)
         }
@@ -59,6 +59,7 @@ const HomeScreen = () => {
     <View style={GlobalStyles.Container}>
       <Header
         name={"Dasboard"}
+        TxtColor={KycStatus === "approved"? Colors.BgColor:Colors.FontColorI}
         color={KycStatus === "approved"? Colors.PrimaryColor:Colors.BgColor}
       />
 

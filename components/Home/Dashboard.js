@@ -37,7 +37,7 @@ const DashboardScreen = ({loanTaken,loanRec,depositRec}) => {
             <Text style={[HomeStyles.CardTitle]}>
               {Number(value).toFixed(0)}
             </Text>
-            <Text style={[HomeStyles.CardDesc, { width: "100%", fontWeight: '100' }]}>
+            <Text style={[HomeStyles.CardDesc, { width: "100%",  }]}>
               {title}
             </Text>
           </View>
@@ -51,11 +51,11 @@ const DashboardScreen = ({loanTaken,loanRec,depositRec}) => {
       <View style={HomeStyles.Card}>
         <View style={GlobalStyles.RowMaker}>
 
-          <View style={{ padding: 10, borderRadius: 1000, backgroundColor: Colors.inActive }}>
+          <View style={{ padding: 10, borderRadius: 1000, backgroundColor: Colors.BgColorII }}>
             {
               identifier === "Loan"?
               <Entypo name="credit-card" size={24} color={Colors.PrimaryColor} />:
-              <FontAwesome6 name="money-bill-trend-up" size={24}  color={Colors.SeconderyColor} />
+              <FontAwesome6 name="money-bill-trend-up" size={24}  color={Colors.deposit} />
             }
           </View>
           <View style={{ marginLeft: 10 }}>
@@ -63,7 +63,7 @@ const DashboardScreen = ({loanTaken,loanRec,depositRec}) => {
             <Text style={[HomeStyles.CardTitle]}>
               {title}
             </Text>
-            <Text style={[HomeStyles.CardDesc, { width: "100%", fontWeight: '100' }]}>
+            <Text style={[HomeStyles.CardDesc, { width: "100%",  }]}>
               {subtitle}
             </Text>
           </View>
@@ -84,7 +84,7 @@ const DashboardScreen = ({loanTaken,loanRec,depositRec}) => {
           <TouchableOpacity 
         onPress={()=> navigation.navigate(route)}
         style={HomeStyles.ApplyButtonSmall}>
-            <Text style={{ fontSize: 12, color: Colors.FontColorI }}>
+            <Text style={{ fontSize: 12, color: Colors.BgColor }}>
               See History
             </Text>
           </TouchableOpacity>
@@ -117,7 +117,7 @@ const DashboardScreen = ({loanTaken,loanRec,depositRec}) => {
         <TouchableOpacity
         onPress={()=> navigation.navigate("Notifications")}
         >
-        <Ionicons name="notifications-sharp" size={28} color="black" />
+        <Ionicons name="notifications-sharp" size={28} color={Colors.BgColor} />
         <Entypo name="dot-single" size={44} color={Colors.deposit} style={{marginTop:-30,marginLeft:-20}}/>
         </TouchableOpacity>
         </View>
@@ -168,15 +168,15 @@ const DashboardScreen = ({loanTaken,loanRec,depositRec}) => {
         // onPress={()=> navigation.navigate("CustomerForm")}
 
         style={HomeStyles.ApplyButton}>
-          <Text>
+          <Text style={{color:Colors.BgColor}}>
             {loanTaken === "pending"?"In review":"Apply Now"}
           </Text>
         </TouchableOpacity>
 
       </View>
       <InputTitle
-        value={"Your History"}
-        style={{ margin: 10 }}
+        value={"Loan History"}
+        style={{ margin: 10,fontSize:16 }}
       />
       <LoanRecordCard
         title={"Loan Taken"}
@@ -189,8 +189,8 @@ const DashboardScreen = ({loanTaken,loanRec,depositRec}) => {
       />
 
       <InputTitle
-        value={"Your History"}
-        style={{ margin: 10 }}
+           value={"Return History"}
+           style={{ margin: 10,fontSize:16 }}
       />
       <LoanRecordCard
         title={"Loan Return"}
@@ -247,7 +247,7 @@ export default DashboardScreen;
 //             <Text style={[HomeStyles.CardTitle]}>
 //               {value}
 //             </Text>
-//             <Text style={[HomeStyles.CardDesc, { width: "100%", fontWeight: '100' }]}>
+//             <Text style={[HomeStyles.CardDesc, { width: "100%",  }]}>
 //               {title}
 //             </Text>
 //           </View>
@@ -273,7 +273,7 @@ export default DashboardScreen;
 //             <Text style={[HomeStyles.CardTitle]}>
 //               {title}
 //             </Text>
-//             <Text style={[HomeStyles.CardDesc, { width: "100%", fontWeight: '100' }]}>
+//             <Text style={[HomeStyles.CardDesc, { width: "100%",  }]}>
 //               {subtitle}
 //             </Text>
 //           </View>

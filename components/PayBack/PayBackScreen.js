@@ -79,12 +79,12 @@ if(res){
       >
 
       <View style={[PayBackStyles.Card, GlobalStyles.RowMaker, { backgroundColor: Colors.PrimaryColor }]}>
-        <FontAwesome name="warning" size={24} color={Colors.FontColorI} />
+        <FontAwesome name="warning" size={24} color={Colors.BgColor} />
         <View style={{ alignItems: 'flex-start', marginLeft: 10 }}>
-          <Text style={[PayBackStyles.CardTitle, { color: Colors.FontColorI }]}>
+          <Text style={[PayBackStyles.CardTitle, { color: Colors.BgColor }]}>
             Payment Return Policy
           </Text>
-          <Text style={[PayBackStyles.CardDesc, { color: Colors.FontColorI }]}>
+          <Text style={[PayBackStyles.CardDesc, { color: Colors.BgColor }]}>
             Please pay your debt on our given account no. and send the proof of transaction below.
           </Text>
         </View>
@@ -161,14 +161,16 @@ const styles = StyleSheet.create({
     width: WindowWidth/1.05,
     backgroundColor: Colors.BgColorII,
     borderRadius: 10,
-    borderWidth: 1,
-    borderColor: Colors.inActive,
-    marginVertical: 10,
+    borderWidth: 0.3,
+    borderColor: Colors.placeHolder,
+  
+    marginVertical: 3,
   },
   picker: {
     width: WindowWidth/1.05,
     height: 50,
-    color:Colors.FontColorI
+    color:Colors.FontColorI,
+    fontSize:14
   },
 });
 

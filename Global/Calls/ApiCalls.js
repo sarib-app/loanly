@@ -76,7 +76,7 @@ return null
 async function userDasboardStats(uid){
 
   const formdata = new FormData();
-  formdata.append("user_id", uid);
+  formdata.append("user_id", "5");
 
   const requestOptions = {
     method: "POST",

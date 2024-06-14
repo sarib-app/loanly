@@ -13,7 +13,7 @@ import GlobalStyles from '../Branding/GlobalStyles';
 import { useIsFocused } from '@react-navigation/native';
 import Colors from '../Branding/colors';
 // import YtSearchSuggestions from '../Search/YtSearchSuggestions';
-function Header ({name,color}){
+function Header ({name,TxtColor,color}){
 const navigation = useNavigation()
 const focused = useIsFocused()
 
@@ -22,7 +22,7 @@ const focused = useIsFocused()
      
   
 <Text
-style={GlobalStyles.HeaderText}
+style={[GlobalStyles.HeaderText,{color:TxtColor?TxtColor:Colors.FontColorI}]}
 >
   {name}
 </Text>

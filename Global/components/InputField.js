@@ -27,12 +27,13 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 1,
+    borderWidth: 0.3,
     borderColor: Colors.placeHolder,
     borderRadius:10,
     backgroundColor:Colors.BgColorII,
     marginVertical: 10,
-    padding:7,
+    paddingVertical:6,
+    paddingHorizontal:10,
 
     width:WindowWidth/1.05
   },
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     height: 40,
-    fontSize: 16,
+    fontSize: 14,
     color: Colors.FontColorI,
   },
 });
