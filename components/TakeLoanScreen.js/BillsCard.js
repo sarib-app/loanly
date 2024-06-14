@@ -72,6 +72,8 @@ import { useNavigation } from '@react-navigation/native';
           <TouchableOpacity 
           
           onPress={()=> {
+            // navigation.navigate("PayBackForm",{identifier:identifier,leftAmount:leftAmount,LoanTaken:LoanTaken})
+
             if(loanStat === "approved"){
 
               navigation.navigate("PayBackForm",{identifier:identifier,leftAmount:leftAmount,LoanTaken:LoanTaken})

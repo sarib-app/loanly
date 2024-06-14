@@ -76,7 +76,7 @@ return null
 async function userDasboardStats(uid){
 
   const formdata = new FormData();
-  formdata.append("user_id", "5");
+  formdata.append("user_id", uid);
 
   const requestOptions = {
     method: "POST",
@@ -107,7 +107,7 @@ return null
 async function ApplyLoan(uid,amount,duration){
 
   const formdata = new FormData();
-  formdata.append("user_id", "5");
+  formdata.append("user_id", uid);
   formdata.append("loan_amount", amount);
   formdata.append("duration", duration);
   
@@ -142,7 +142,7 @@ return null
 
 
 
-async function ReturnAmount(uid,l_id,amount,transaction_id,amount_paid,pay_type){
+async function ReturnAmountApi(uid,l_id,amount,transaction_id,amount_paid,pay_type){
 
   const formdata = new FormData();
 formdata.append("user_id", uid);
@@ -178,4 +178,4 @@ return null
 
 
 
-export {Login_Call,RegisterCall,userDasboardStats,ApplyLoan}
+export {Login_Call,RegisterCall,userDasboardStats,ApplyLoan,ReturnAmountApi}

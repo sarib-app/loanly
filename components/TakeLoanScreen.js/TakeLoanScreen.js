@@ -12,6 +12,7 @@ import { ApplyLoan, userDasboardStats } from '../../Global/Calls/ApiCalls';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import LoadingModal from '../../Global/components/LoadingModal';
 import InitialLoading from '../../Global/components/InitialLoading';
+import getAsyncuser from '../../Global/components/getAsyncUser';
 
 
 
@@ -31,22 +32,32 @@ const TakeLoanScreen = () => {
 
 
 
- useEffect(()=>{
-    async function getDashboardData(){
-      const res= await userDasboardStats("5")
-    if(res != null){
-  setLoanTaken(res.user_record.loan_applied)
-  setLoanrec(res.Active_Loan_Data)
-    
-    }
-    setInittialLoaderState(false)
-    }
-    getDashboardData()
-    
-    },[focused])
+ const [user, setuser] = useState(null);
+
+    useEffect(()=>{
+        async function getAsyncData(){
+        
+        const userData = await getAsyncuser()
+        if(userData){
+          setuser(userData)
+          getDashboardData(userData)
+        }
+        
+        }
+        getAsyncData()
+          },[focused])
 
 
-
+          async function getDashboardData(userData){
+            const res= await userDasboardStats(userData.id)
+            console.log(res)
+          if(res != null){
+        setLoanTaken(res.user_record.loan_applied)
+        setLoanrec(res.Active_Loan_Data)
+          
+          }
+          setInittialLoaderState(false)
+          }
 
 
 
@@ -84,7 +95,7 @@ if(!requstLoanAmount,!period){
 }
 const duration = period*30
 
-  const res = await ApplyLoan("5",requstLoanAmount,duration)
+  const res = await ApplyLoan(user.id,requstLoanAmount,duration)
   console.log(res)
   if(res){
 if(res === "200"){
@@ -244,10 +255,11 @@ title={"Full Payment"}
 subtitle={"Pay full amount: "}
 identifier={"Full"}
 titleII={"Amount Left"}
-LoanTaken={loanRec?.active_loan_amount }
-leftAmount={loanRec?.pending_amount }
-interest={loanRec?.active_interest_applied}
+LoanTaken={loanRec?.active_loan_amount || 0}
+leftAmount={loanRec?.pending_amount || 0}
+interest={loanRec?.active_interest_applied || 0}
 loanStat={loanTaken}
+
 
 />
 
@@ -257,9 +269,9 @@ title={"Partial Payment"}
 subtitle={"Pay Installment of: "}
 identifier={"Installment"}
 titleII={"Amount Paid"}
-LoanTaken={loanRec?.active_loan_amount }
-leftAmount={loanRec?.paid_amount}
-interest={loanRec?.active_interest_applied }
+LoanTaken={loanRec?.active_loan_amount || 0 }
+leftAmount={loanRec?.paid_amount || 0}
+interest={loanRec?.active_interest_applied || 0 }
 loanStat={loanTaken}
 
 

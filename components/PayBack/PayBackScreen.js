@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Platform, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -12,7 +12,9 @@ import PayBackStyles from './PayBack';
 import Header from '../../Global/components/Header';
 import { WindowWidth } from '../../Global/components/Dimensions';
 import ImageUpload from '../../Global/components/ImageUpload';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import getAsyncuser from '../../Global/components/getAsyncUser';
+import { ReturnAmountApi } from '../../Global/Calls/ApiCalls';
 
 const PayBackForm = ({ route }) => {
 const {identifier} = route.params
@@ -20,16 +22,27 @@ const {leftAmount} = route.params
 const {LoanTaken} = route.params
 
 const navigation = useNavigation()
+const focused = useIsFocused()
 // console.log(identifier)
  
   const [AccountType, setAccountType] = useState('');
   const [ReturnAmount, setReturnAmount] = useState(identifier === "Full"?leftAmount:0);
   const [TransactionId, setTransactionId] = useState('');
   const [invoice, setinvoice] = useState(null);
+  const [user, setuser] = useState(null);
 
   const [isPressed, setIsPressed] = useState(false);
 
-  
+  useEffect(()=>{
+async function getAsyncData(){
+
+const userData = await getAsyncuser()
+if(userData){
+  setuser(userData)
+}
+}
+getAsyncData()
+  },[focused])
 
   const handleSubmit = () => {
     setIsPressed((prev) => !prev);
@@ -45,7 +58,7 @@ const navigation = useNavigation()
 
 async function submitReturn(){
   
-const res = await ReturnAmount("5","8",LoanTaken,TransactionId,ReturnAmount,identifier)
+const res = await ReturnAmountApi(user.id,"8",LoanTaken,TransactionId,ReturnAmount,identifier)
 if(res){
   if(res === "200"){
     Alert.alert("Paid","Amount paid request is generated it will be approved soon")
@@ -53,7 +66,6 @@ if(res){
   }
   else{
     Alert.alert("Not Paid",res.message)
-
   }
 }
 }
@@ -95,14 +107,14 @@ if(res){
       </View>
 
 
-      <InputTitle 
+      {/* <InputTitle 
       value={"Invoice Screenshot"}
       />
       <ImageUpload 
     //   label={"dd"}
       onSelect={setinvoice}
       value={invoice}
-      />
+      /> */}
 
       <InputTitle value="Return Amount" />
       <InputField

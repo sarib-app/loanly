@@ -16,6 +16,7 @@ import InputTitle from '../../Global/components/InputTitle';
 import DashboardScreen from './Dashboard';
 import { userDasboardStats } from '../../Global/Calls/ApiCalls';
 import InitialLoading from '../../Global/components/InitialLoading';
+import getAsyncuser from '../../Global/components/getAsyncUser';
 const HomeScreen = () => {
   const navigation = useNavigation()
   const focused = useIsFocused()
@@ -25,25 +26,33 @@ const HomeScreen = () => {
   const [depositRec,setDepositRec] = useState(null)
 
   const [loading,setLoading] = useState(true)
+  const [user, setuser] = useState(null);
 
+  useEffect(()=>{
+      async function getAsyncData(){
+      
+      const userData = await getAsyncuser()
+      if(userData){
+        setuser(userData)
+        getDashboardData(userData)
+      }
+      }
+      getAsyncData()
+        },[focused])
 
-useEffect(()=>{
-async function getDashboardData(){
-  const res= await userDasboardStats("5")
-if(res != null){
-  console.log(res.user_record)
-  setKycStatus(res.user_record.kyc_submitted)
-  setLoanTaken(res.user_record.loan_applied)
-  setLoading(false)
-  setLoanrec(res.user_record.Loan)
-  setDepositRec(res.user_record.Deposit)
-}
-setLoading(false)
-}
-getDashboardData()
-
-},[focused])
-
+        async function getDashboardData(userData){
+          const res= await userDasboardStats(userData.id)
+        if(res != null){
+          console.log(res.user_record)
+          setKycStatus(res.user_record.kyc_submitted)
+          setLoanTaken(res.user_record.loan_applied)
+          setLoading(false)
+          setLoanrec(res.user_record.Loan)
+          setDepositRec(res.user_record.Deposit)
+        }
+        // setLoading(false)
+        }
+       
 
 
   return (
