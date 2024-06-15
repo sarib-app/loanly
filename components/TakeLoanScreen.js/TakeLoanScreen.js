@@ -256,6 +256,7 @@ leftAmount={loanRec?.pending_amount || 0}
 interest={loanRec?.active_interest_applied || 0}
 loanStat={loanTaken}
 
+loanId={loanRec?.id}
 
 />
 
@@ -269,6 +270,7 @@ LoanTaken={loanRec?.active_loan_amount || 0 }
 leftAmount={loanRec?.paid_amount || 0}
 interest={loanRec?.active_interest_applied || 0 }
 loanStat={loanTaken}
+loanId={loanRec?.id}
 
 
 />

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import GlobalStyles from "../../Global/Branding/GlobalStyles";
 import HeaderScreens from "../../Global/components/HeaderScreens";
 import { Text, View } from "react-native";
@@ -8,45 +8,56 @@ import InputTitle from "../../Global/components/InputTitle";
 import NotifiactionStyles from "./NotificationStyles";
 import { FlatList } from "react-native-gesture-handler";
 import Header from "../../Global/components/Header";
+import { useIsFocused } from "@react-navigation/native";
+import { getNotifications } from "../../Global/Calls/ApiCalls";
+import getAsyncuser from "../../Global/components/getAsyncUser";
+import InitialLoading from "../../Global/components/InitialLoading";
+import NodataFound from "../../Global/components/NoDataFound";
 function Notifications(){
-    const data =[
-        {
-        LoanAmount:"2000",
-        InterestperDay:"3.0",
-        status:"approved",
-        Duration:"3/6/12",
-        isCompleted:true,
-        repayAmountLeft:2000,
-        Aamount_rePaid: 1000
-        },
-        {
-            LoanAmount:"2000",
-            InterestperDay:"3.0",
-            status:"rejected",
-            Duration:"3/6/12",
-            isCompleted:true,
-            repayAmountLeft:2000,
-            Aamount_rePaid: 1000
-            },
-            {
-                LoanAmount:"2000",
-                InterestperDay:"3.0",
-                status:"pending",
-                Duration:"3/6/12",
-                isCompleted:true,
-                repayAmountLeft:2000,
-                Aamount_rePaid: 1000
-                },
-                {
-                    LoanAmount:"2000",
-                    InterestperDay:"3.0",
-                    status:"pending",
-                    Duration:"3/6/12",
-                    isCompleted:true,
-                    repayAmountLeft:2000,
-                    Aamount_rePaid: 1000
-                    },
-        ]
+  
+
+
+
+    const focused = useIsFocused()
+    const [notifList,setnotifList] =useState([])
+    
+    const [loading,setLoading] =useState(true)
+    
+    
+    
+    
+    
+    
+            useEffect(()=>{
+                async function getAsyncData(){
+                
+                const userData = await getAsyncuser()
+                if(userData){
+                    getNotifs(userData)
+                }
+                }
+                getAsyncData()
+                  },[focused])
+    
+    
+    async function getNotifs(userData){
+        const res= await getNotifications(userData.id)
+        console.log(res)
+        if(res != null){
+         if(res.status === "200"){
+            setnotifList(res.notifications)
+            
+         }
+     setLoading(false)
+        }
+    }
+    
+
+
+
+
+
+
     const renderitems = ({item})=>(
 
         <View style={GlobalStyles.HistoryCard}>
@@ -83,10 +94,26 @@ function Notifications(){
             <Header 
             name={"Notifications"}
             />
+
+
+            {
+                loading === true?
+                <InitialLoading />:
+                <>
+
+                {
+                    notifList.length > 0 ?
+
 <FlatList 
-data={data}
+data={notifList}
 renderItem={renderitems}
-/>
+/>:
+<NodataFound/>
+                }
+
+</>
+
+            }
        
         </View>
     )

@@ -11,12 +11,13 @@ import DepositHistoryScreen from '../HistoryScreens/AmountSubmit';
 import Notifications from '../Notifications.js/Notifications';
 import CustomerForm from '../CustomerForm/Customer';
 import PayBackForm from '../PayBack/PayBackScreen';
+import MockUpScreen from '../MockUp/MockUpScreen';
 const Stack = createStackNavigator();
 
 const AuthStack = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="MockUpScreen">
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Signup" component={SignupScreen} options={{ headerShown: false }} />
         <Stack.Screen name="BottomNavigation" component={BottomNavigation} options={{ headerShown: false }} />
@@ -27,6 +28,7 @@ const AuthStack = () => {
         <Stack.Screen name="Notifications" component={Notifications} options={{ headerShown: false }} />
         <Stack.Screen name="CustomerForm" component={CustomerForm} options={{ headerShown: false }} />
         <Stack.Screen name="PayBackForm" component={PayBackForm} options={{ headerShown: false }} />
+        <Stack.Screen name="MockUpScreen" component={MockUpScreen} options={{ headerShown: false }} />
 
       </Stack.Navigator>
     </NavigationContainer>

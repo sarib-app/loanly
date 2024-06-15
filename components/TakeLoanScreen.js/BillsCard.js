@@ -17,7 +17,8 @@ import { useNavigation } from '@react-navigation/native';
     LoanTaken,
     leftAmount,
     interest,
-    loanStat
+    loanStat,
+    loanId
 
     
   }) {
@@ -72,17 +73,17 @@ import { useNavigation } from '@react-navigation/native';
           <TouchableOpacity 
           
           onPress={()=> {
-            navigation.navigate("PayBackForm",{identifier:identifier,leftAmount:leftAmount,LoanTaken:LoanTaken})
+            // navigation.navigate("PayBackForm",{identifier:identifier,leftAmount:leftAmount,LoanTaken:LoanTaken,loanId:loanId})
 
             if(loanStat === "approved"){
 
-              navigation.navigate("PayBackForm",{identifier:identifier,leftAmount:leftAmount,LoanTaken:LoanTaken})
+              navigation.navigate("PayBackForm",{identifier:identifier,leftAmount:leftAmount,LoanTaken:LoanTaken,loanId:loanId})
             
             }else{
               Alert.alert("No Active Loan","You do not have any active loan, please take a loan first.")
             }
             }
-          
+
           }
           style={[LoanStyles.ApplyButtonSmall,{marginTop:10,marginLeft:30}]}>
               <Text style={{ fontSize: 12, color: Colors.BgColor }}>

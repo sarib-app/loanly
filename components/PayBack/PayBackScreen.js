@@ -20,6 +20,7 @@ const PayBackForm = ({ route }) => {
 const {identifier} = route.params
 const {leftAmount} = route.params
 const {LoanTaken} = route.params
+const {loanId} = route.loanId
 
 const navigation = useNavigation()
 const focused = useIsFocused()
@@ -58,7 +59,7 @@ getAsyncData()
 
 async function submitReturn(){
   
-const res = await ReturnAmountApi(user.id,"8",LoanTaken,TransactionId,ReturnAmount,identifier)
+const res = await ReturnAmountApi(user.id,loanId,LoanTaken,TransactionId,ReturnAmount,identifier)
 if(res){
   if(res === "200"){
     Alert.alert("Paid","Amount paid request is generated it will be approved soon")

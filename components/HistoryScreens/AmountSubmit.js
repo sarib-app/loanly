@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import GlobalStyles from "../../Global/Branding/GlobalStyles";
 import HeaderScreens from "../../Global/components/HeaderScreens";
 import { Text, View } from "react-native";
@@ -8,45 +8,65 @@ import InputTitle from "../../Global/components/InputTitle";
 import HistoryStyles from "./HistoryStyle";
 import { FlatList } from "react-native-gesture-handler";
 import Header from "../../Global/components/Header";
+import { useIsFocused } from "@react-navigation/native";
+import getAsyncuser from "../../Global/components/getAsyncUser";
+import { getDepositList } from "../../Global/Calls/ApiCalls";
+import NodataFound from "../../Global/components/NoDataFound";
+import InitialLoading from "../../Global/components/InitialLoading";
 function DepositHistoryScreen(){
-    const data =[
-        {
-        LoanAmount:"2000",
-        InterestperDay:"3.0",
-        status:"approved",
-        Duration:"3/6/12",
-        isCompleted:true,
-        repayAmountLeft:2000,
-        Aamount_rePaid: 1000
-        },
-        {
-            LoanAmount:"2000",
-            InterestperDay:"3.0",
-            status:"rejected",
-            Duration:"3/6/12",
-            isCompleted:true,
-            repayAmountLeft:2000,
-            Aamount_rePaid: 1000
-            },
-            {
-                LoanAmount:"2000",
-                InterestperDay:"3.0",
-                status:"pending",
-                Duration:"3/6/12",
-                isCompleted:true,
-                repayAmountLeft:2000,
-                Aamount_rePaid: 1000
-                },
-                {
-                    LoanAmount:"2000",
-                    InterestperDay:"3.0",
-                    status:"pending",
-                    Duration:"3/6/12",
-                    isCompleted:true,
-                    repayAmountLeft:2000,
-                    Aamount_rePaid: 1000
-                    },
-        ]
+   
+
+
+
+
+
+
+
+
+    const focused = useIsFocused()
+    const [depositList,setdepositList] =useState([])
+    
+    const [loading,setLoading] =useState(true)
+    
+    
+    
+    
+    
+    
+            useEffect(()=>{
+                async function getAsyncData(){
+                
+                const userData = await getAsyncuser()
+                if(userData){
+                    getLoansAll(userData)
+                }
+                }
+                getAsyncData()
+                  },[focused])
+    
+    
+    async function getLoansAll(userData){
+        const res= await getDepositList(userData.id)
+        console.log(res)
+        if(res != null){
+         if(res.status === "200"){
+            setdepositList(res.transactions)
+            
+         }
+     setLoading(false)
+        }
+    }
+    
+
+
+
+    const CardDesc={
+        fontWeight:'600',
+          fontSize:12,
+          color:Colors.placeHolder,
+        //   width:"40%",
+      }
+    
     const renderitems = ({item})=>(
 
         <View style={GlobalStyles.HistoryCard}>
@@ -64,8 +84,8 @@ function DepositHistoryScreen(){
             value={"Loan Repaid Rejected"}
             style={{marginLeft:0}}
             />
-            <Text style={{color:"rgba(255,255,255,0.5)"}}>
-                Loan Amount: {item.LoanAmount}
+            <Text style={CardDesc}>
+                Loan Amount: {item.loan_amount}
             </Text>
         </View>
 
@@ -75,31 +95,31 @@ function DepositHistoryScreen(){
 
         <View style={[GlobalStyles.ColumnAligner,{marginTop:10}]}>
             <InputTitle
-            value={"Installment"}
+            value={item?.amount_paid_type || "installment"}
             style={{marginLeft:0}}
             />
-            <Text style={{color:"rgba(255,255,255,0.5)"}}>
+            <Text style={CardDesc}>
                 Type
             </Text>
         </View>
 
         <View style={[GlobalStyles.ColumnAligner,{marginTop:10}]}>
             <InputTitle
-            value={"Approved"}
-            style={{marginLeft:0,color:Colors.send}}
+            value={item?.status}
+            style={{marginLeft:0,color: item.status === "rejected"?Colors.danger:item.status ==="pending"?Colors.deposit:Colors.send}}
             />
-            <Text style={{color:"rgba(255,255,255,0.5)"}}>
+            <Text style={CardDesc}>
             status
             </Text>
         </View>
 
         <View style={[GlobalStyles.ColumnAligner,{marginTop:10}]}>
             <InputTitle
-            value={"30000"}
-            style={{marginLeft:0}}
+            value={item?.amount_paid || 0}
+            style={{marginLeft:0,alignSelf:"center"}}
             />
-            <Text style={{color:"rgba(255,255,255,0.5)"}}>
-                Bill Left
+            <Text style={CardDesc}>
+                Bill Paid
             </Text>
         </View>
         </View>
@@ -112,12 +132,28 @@ function DepositHistoryScreen(){
         style={GlobalStyles.Container}
         >
             <Header 
-            name={"Deposit History"}
+            name={"Return History"}
             />
+
+
+            {
+                loading === true?
+                <   InitialLoading />:
+                <>
+
+                {
+                    depositList.length > 0 ?
+
 <FlatList 
-data={data}
+data={depositList}
 renderItem={renderitems}
-/>
+/>:
+<NodataFound/>
+                }
+
+</>
+
+            }
        
         </View>
     )

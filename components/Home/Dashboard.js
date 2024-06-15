@@ -155,7 +155,7 @@ const DashboardScreen = ({loanTaken,loanRec,depositRec}) => {
         </View>
         <TouchableOpacity 
         onPress={()=>{
-          navigation.navigate("TakeLoanScreen")
+          // navigation.navigate("TakeLoanScreen")
 
           if(loanTaken === "pending"){
             
@@ -169,7 +169,7 @@ const DashboardScreen = ({loanTaken,loanRec,depositRec}) => {
 
         style={HomeStyles.ApplyButton}>
           <Text style={{color:Colors.BgColor}}>
-            {loanTaken === "pending"?"In review":"Apply Now"}
+            {loanTaken === "pending"?"In review":loanTaken === "approved"?"Pay Back":"Apply Now"}
           </Text>
         </TouchableOpacity>
 

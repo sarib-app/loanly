@@ -74,9 +74,9 @@ return null
 
 
 async function userDasboardStats(uid){
-
+console.log(uid)
   const formdata = new FormData();
-  formdata.append("user_id", "5");
+  formdata.append("user_id", uid);
 
   const requestOptions = {
     method: "POST",
@@ -178,4 +178,127 @@ return null
 
 
 
-export {Login_Call,RegisterCall,userDasboardStats,ApplyLoan,ReturnAmountApi}
+
+
+
+
+
+
+async function getLoanList(uid){
+  const requestOptions = {
+    method: "GET",
+    redirect: "follow"
+  };
+  
+  try{
+  
+    const response = await fetch(`${BaseUrl}loans-by-user/${uid}`,requestOptions)
+    const result = await response.json()
+   
+    return result
+  
+  }
+  catch(e){
+    console.log(e)
+  Alert.alert("Error","Somethig Went Wrong, Try again later")
+  return null
+  
+  }
+  
+  }
+
+
+
+  async function getDepositList(uid){
+    const requestOptions = {
+      method: "GET",
+      redirect: "follow"
+    };
+    
+    try{
+    
+      const response = await fetch(`${BaseUrl}transactions/${uid}`,requestOptions)
+      const result = await response.json()
+     
+      return result
+    
+    }
+    catch(e){
+      console.log(e)
+    Alert.alert("Error","Somethig Went Wrong, Try again later")
+    return null
+    
+    }
+    
+    }
+  
+  
+
+
+
+
+
+    async function getNotifications(uid){
+      const requestOptions = {
+        method: "GET",
+        redirect: "follow"
+      };
+      
+      try{
+      
+        const response = await fetch(`${BaseUrl}notifications/${uid}`,requestOptions)
+        const result = await response.json()
+       
+        return result
+      
+      }
+      catch(e){
+        console.log(e)
+      Alert.alert("Error","Somethig Went Wrong, Try again later")
+      return null
+      
+      }
+      
+      }
+
+
+
+      async function getUserData(uid){
+        const formdata = new FormData();
+        formdata.append("user_id", uid);
+        
+        const requestOptions = {
+          method: "POST",
+          body: formdata,
+          redirect: "follow"
+        };
+        
+        try{
+        
+          const response = await fetch(`${BaseUrl}user-data`,requestOptions)
+          const result = await response.json()
+         
+          return result
+        
+        }
+        catch(e){
+          console.log(e)
+        Alert.alert("Error","Somethig Went Wrong, Try again later")
+        return null
+        
+        }
+        
+        }
+
+
+export {
+  Login_Call,
+  RegisterCall,
+  userDasboardStats,
+  ApplyLoan,
+  ReturnAmountApi,
+  getLoanList,
+  getDepositList,
+  getNotifications,
+  getUserData
+}

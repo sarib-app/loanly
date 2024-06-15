@@ -18,7 +18,7 @@ const navigation = useNavigation()
 const focused = useIsFocused()
 
   return (
-    <SafeAreaView style={[GlobalStyles.Header,{backgroundColor:color?color:Colors.BgColor}]}>
+    <View style={[GlobalStyles.Header,{backgroundColor:color?color:Colors.BgColor}]}>
      
   
 <Text
@@ -33,7 +33,7 @@ style={[GlobalStyles.HeaderText,{color:TxtColor?TxtColor:Colors.FontColorI}]}
      
 
 
-    </SafeAreaView>
+    </View>
   );
 };
 

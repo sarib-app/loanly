@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { View, Text, StyleSheet, Alert, Image } from 'react-native';
 import InputField from '../../Global/components/InputField';
 import CustomButton from '../../Global/CustomButton';
 import GlobalStyles from '../../Global/Branding/GlobalStyles';
@@ -10,6 +10,8 @@ import AuthStyles from './AuthStyles';
 import { Login_Call } from '../../Global/Calls/ApiCalls';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingModal from '../../Global/components/LoadingModal';
+import Ellipse from "../../assets/images/Ellipse.png"
+import EllipseII from "../../assets/images/EllipseII.png"
 const LoginScreen = ({ navigation }) => {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
@@ -54,7 +56,7 @@ else if(result.status === "401"){
         <Ionicons name="chevron-back-outline" size={28} color={Colors.FontColorI} />
       <Text style={AuthStyles.title}>Welocome</Text>
       <Text style={AuthStyles.titleTwo}>Login To Continue</Text>
-     
+  
 
       </View>
       <InputTitle 
@@ -81,12 +83,26 @@ else if(result.status === "401"){
 
       />
       <CustomButton title="Login" onPress={() => {handleLogin()}} />
+      <Image
+source={EllipseII}
+style={{width:54,height:57,marginTop:180,alignSelf:'flex-start',marginLeft:20,  opacity:0.8}}
+/>
+
+<Image
+source={EllipseII}
+style={{width:54,height:57,alignSelf:'flex-start',opacity:1,position:'absolute',top:70,right:30,transform: [
+  { rotate: '180deg' },
+  { scale: 1.5 },
+]}}
+/>
       <Text style={AuthStyles.signupText} onPress={() => navigation.navigate('Signup')}>
         Don't have an account? Sign up
       </Text>
       <LoadingModal 
       show={loading}
       />
+
+
     </View>
   );
 };

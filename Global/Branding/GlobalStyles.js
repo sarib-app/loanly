@@ -61,7 +61,7 @@ HeaderText:{
     color:Colors.FontColorI,
     fontSize:18,
     fontWeight:'bold',
-    marginLeft:10
+    // marginLeft:10
 },
 BtnText:{
   color:Colors.FontColorI,

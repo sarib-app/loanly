@@ -13,35 +13,52 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
 import Header from '../../Global/components/Header';
+import getAsyncuser from '../../Global/components/getAsyncUser';
+import { getUserData } from '../../Global/Calls/ApiCalls';
 
 // import * as Linking from 'expo-linking';
 const Profile = () => {
-  const focused=useIsFocused()
+const focused=useIsFocused()
 const navigation =  useNavigation()
-
 const [user,setUser]=useState()
 const iconColor = Colors.FontColorI
+const [loading,setLoading] =useState(true)
 
 
 
 
-// useEffect(()=>{
-//   async function getUser(){
-  
-//     const getUser = await GetLocalUser()
-//     if(getUser != null){
-//       const res = await getUserData(getUser.id)
-//       if(res != null){
-//          setUser(res.data)
-//       }
-//     }
-  
-//   }
-//   getUser()
-  
-  
-  
-//   },[focused])
+
+
+        useEffect(()=>{
+            async function getAsyncData(){
+            
+            const userData = await getAsyncuser()
+            if(userData){
+                getUserDataRec(userData)
+            }
+            }
+            getAsyncData()
+              },[focused])
+
+
+async function getUserDataRec(userData){
+    const res= await getUserData(userData.id)
+    if(res != null){
+     if(res.status === "200"){
+      setUser(res.message)
+        
+     }
+ setLoading(false)
+    }
+}
+
+
+
+
+
+
+
+
 
 
 function navigationRester(title) {
@@ -89,11 +106,11 @@ style={{width:40,height:40,borderRadius:1000}}
 style={GlobalStyles.TitleText}
 
 >
-  {user?.username || "---"} 
+  {user?.name || "---"} 
 </Text>
 </View>
 <TouchableHighlight
-onPress={()=> navigation.navigate("ProfileDetails", {userData:user})}
+// onPress={()=> navigation.navigate("ProfileDetails", {userData:user})}
 
 >
 
@@ -163,13 +180,13 @@ style={Styles.IconWrapper}
 <Text
 style={GlobalStyles.textStyle}
 >
-  Total JGK
+  Kyc:   
 </Text>
 </View>
 <Text
-style={GlobalStyles.textStyle}
+style={[GlobalStyles.textStyle,{color:user?.kyc === "pending"? Colors.deposit:user?.kyc === "approved"?Colors.send:Colors.danger}]}
 >
-  {user?.JGK || "--"}
+  {user?.kyc || "--"}
 </Text>
 </View>
 

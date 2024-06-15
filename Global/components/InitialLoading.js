@@ -3,13 +3,14 @@ import AnimatedLottieView from "lottie-react-native";
 import loaderAnimation from '../../assets/Animationn/Loader.json'
 import { View,Modal, TouchableOpacity ,Text} from "react-native";
 import GlobalStyles from "../Branding/GlobalStyles";
+import Colors from "../Branding/colors";
 
 function InitialLoading({show}){
     const animation = useRef()
 
     return(
       
-        <View style={[GlobalStyles.Container,{backgroundColor:"rgba(0,0,0,0.4)",justifyContent:'center'}]}> 
+        <View style={[GlobalStyles.Container,{backgroundColor:Colors.BgColor,justifyContent:'center'}]}> 
         {/* <Header/> */}
         <AnimatedLottieView 
         autoPlay
