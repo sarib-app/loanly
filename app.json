@@ -18,7 +18,10 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -30,6 +33,11 @@
           "photosPermission": "This app requires you to allow photos to use them for verification and other reasons."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "7665d305-4207-485a-afb6-42ffaa4c2ecc"
+      }
+    }
   }
 }
