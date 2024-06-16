@@ -33,6 +33,12 @@
         {
           "photosPermission": "This app requires you to allow photos to use them for verification and other reasons."
         }
+      ],
+      [
+        "expo-contacts",
+        {
+          "contactsPermission": "Allow Subhida to get your contacts otherwise you wont be able to take loans."
+        }
       ]
     ],
     "extra": {

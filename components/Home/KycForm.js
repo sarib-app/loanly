@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import GlobalStyles from '../../Global/Branding/GlobalStyles';
 import HeaderScreens from '../../Global/components/HeaderScreens';
 import Header from '../../Global/components/Header';
@@ -46,11 +46,21 @@ const navigation = useNavigation()
         <Text style={[HomeStyles.CardDesc,{width:"80%",textAlign:'center',marginBottom:30}]}>
   Your Dashboad is currently locked, it will be opened after your KYC is approved
 </Text>
+
+{
+  KycStatus == "pending"?
+  <CustomButton 
+title={"Kyc Under Review"}
+onPress={()=> Alert.alert("Already submitted","You already have submitted KYC, please for it to get approved.")}
+
+/>:
 <CustomButton 
 title={"Upload Kyc"}
 onPress={()=> navigation.navigate("CustomerForm")}
 
 />
+}
+
   </>
   );
 };

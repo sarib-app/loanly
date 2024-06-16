@@ -8,39 +8,89 @@ import { Entypo } from '@expo/vector-icons';
 import InputField from '../../Global/components/InputField';
 import InputTitle from '../../Global/components/InputTitle';
 import BillsCard from './BillsCard';
-import { ApplyLoan, userDasboardStats } from '../../Global/Calls/ApiCalls';
+import { ApplyLoan, PostContacts, userDasboardStats } from '../../Global/Calls/ApiCalls';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import LoadingModal from '../../Global/components/LoadingModal';
 import InitialLoading from '../../Global/components/InitialLoading';
 import getAsyncuser from '../../Global/components/getAsyncUser';
+import * as Contacts from 'expo-contacts';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import GetContactsFunction from '../GetContacts/GetContacts';
 
 
 
 const TakeLoanScreen = () => {
-  const navigation = useNavigation()
-  const focused= useIsFocused()
+ const navigation = useNavigation()
+ const focused= useIsFocused()
  const [requstLoanAmount,setRequestLoanAmount]=useState("")
  const [period,setPeriod]=useState(3)
  const [loading,setLoading]=useState(false)
  const [InittialLoaderState,setInittialLoaderState]=useState(true)
-
  const [loanTaken,setLoanTaken] = useState("NA")
-
  const [loanRec,setLoanrec] = useState(null)
-
-
-
-
-
  const [user, setuser] = useState(null);
+ const [contactsNotAllowed,setContactsNotAllowed] = useState(true)
+
+
+ async function checkContactPermissions(userData){
+    const { status } = await Contacts.requestPermissionsAsync();
+    if (status === 'granted') {
+      const { data } = await Contacts.getContactsAsync({
+        fields: [Contacts.Fields.PhoneNumbers],
+      });
+
+
+
+      if (data.length > 0) {
+        const contact =  data.filter((item,index) => index < 2);
+        console.log("sdsaaa",contact)
+
+        const formattedContacts = contact.map(contact => {
+            return {
+              name: contact.name,
+              phone: "982020212"
+            };
+          });
+          console.log("sds",formattedContacts)
+
+
+        const res = await PostContacts(userData.id,formattedContacts)
+        console.log("sddsd",res)
+        if(res){
+            console.log(res)
+            setContactsNotAllowed(false)
+            getDashboardData(userData)
+        AsyncStorage.setItem("contacts","submitted")
+
+        }
+    
+
+        // AsyncStorage.setItem("contacts","submitted")
+
+        // console.log(contact);
+      }
+ }
+ else{
+    setContactsNotAllowed(true)
+    setInittialLoaderState(false)
+ }
+}
 
     useEffect(()=>{
         async function getAsyncData(){
         
         const userData = await getAsyncuser()
+        const getContactPermissions = await AsyncStorage.getItem("contacts")
         if(userData){
           setuser(userData)
-          getDashboardData(userData)
+          if(!getContactPermissions){
+
+              checkContactPermissions(userData)
+          }else{
+            setContactsNotAllowed(false)
+
+            getDashboardData(userData)
+          }
         }
         
         }
@@ -98,14 +148,13 @@ const duration = period*30
   const res = await ApplyLoan(user.id,requstLoanAmount,duration)
   console.log(res)
   if(res){
-if(res === "200"){
+if(res?.status === "200"){
     Alert.alert("Congratulations","You have successfully obtained loan!")
     navigation.goBack()
     setLoading(false)
 }
 else{
     Alert.alert("Failed",res.message)
-
     setLoading(false)
 }
   }
@@ -274,7 +323,20 @@ loanId={loanRec?.id}
 
 
 />
+
+
 </>
+}
+
+
+{
+    InittialLoaderState===false &&
+    
+<GetContactsFunction
+show={contactsNotAllowed}
+onPress={()=> checkContactPermissions(user)}
+
+/>
 }
 <LoadingModal 
 show={loading}

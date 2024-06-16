@@ -26,7 +26,7 @@ import { useNavigation } from '@react-navigation/native';
     const navigation = useNavigation()
     function RowRecord({
         value, title,
-        style
+        style,param
       }) {
         return (
     
@@ -36,7 +36,7 @@ import { useNavigation } from '@react-navigation/native';
           <View style={[style,{alignItems:'center'}]}>
     
             <Text style={[LoanStyles.CardTitle]}>
-              {value}
+              {param+""+Number(value).toFixed(0)}
             </Text>
             <Text style={[LoanStyles.CardDesc, { width: "100%" }]}>
               {title}
@@ -93,18 +93,23 @@ import { useNavigation } from '@react-navigation/native';
         </View>
         <View style={[GlobalStyles.RowMaker, { marginTop: 20, justifyContent: 'space-between' }]}>
           <RowRecord
-            value={"₹ "+leftAmount}
+            value={leftAmount}
             title={titleII}
+            param={"₹ "}
           />
 
           <RowRecord
             value={interest}
             title={"Total Interest"}
+            param={"₹ "}
+
           // style={{marginLeft:20}}
           />
            <RowRecord
-            value={"₹ "+LoanTaken}
+            value={LoanTaken}
             title={"Loan Taken"}
+            param={"₹ "}
+
           // style={{marginLeft:20}}
           />
 

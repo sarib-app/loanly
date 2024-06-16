@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Platform, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -14,6 +14,7 @@ import { WindowWidth } from '../../Global/components/Dimensions';
 import ImageUpload from '../../Global/components/ImageUpload';
 import { useNavigation } from '@react-navigation/native';
 import LoadingModal from '../../Global/components/LoadingModal';
+import getAsyncuser from '../../Global/components/getAsyncUser';
 
 const CustomerForm = ({  }) => {
   const navigation = useNavigation()
@@ -30,6 +31,9 @@ const CustomerForm = ({  }) => {
   const [loading, setLoading] = useState(false);
 
   const [AdharCard, setAdharCard] = useState(null);
+
+  const [user, setuser] = useState(null);
+
   const [PanCard, setPanCard] = useState(null);
   const [selfie, setSelfie] = useState(null);
   const handleDateChange = (event, selectedDate) => {
@@ -53,7 +57,7 @@ const CustomerForm = ({  }) => {
   const postRequest = async () => {
     setLoading(true)
     const formData = new FormData();
-    formData.append('user_id', '5');
+    formData.append('user_id', user.id);
     formData.append('first_name', firstName);
     formData.append('middle_name', middleName);
     formData.append('last_name', lastName);
@@ -124,20 +128,36 @@ const CustomerForm = ({  }) => {
 
 
 
+
+
+
+  useEffect(()=>{
+      async function getAsyncData(){
+      
+      const userData = await getAsyncuser()
+      if(userData){
+        setuser(userData)
+      }
+      }
+      getAsyncData()
+        },[])
+
+
   return (
-    <View style={GlobalStyles.Container}>
+    <View style={[GlobalStyles.Container,{paddingBottom:20}]}>
       <Header name={"Give All Details"} />
       <ScrollView
-      contentContainerStyle={{alignItems:'center'}}
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{alignItems:'center',width:WindowWidth}}
       >
 
       <View style={[CustomerStyles.Card, GlobalStyles.RowMaker, { backgroundColor: Colors.deposit }]}>
-        <FontAwesome name="warning" size={24} color={Colors.FontColorI} />
+        <FontAwesome name="warning" size={24} color={Colors.BgColor} />
         <View style={{ alignItems: 'flex-start', marginLeft: 10 }}>
-          <Text style={[CustomerStyles.CardTitle, { color: Colors.FontColorI }]}>
+          <Text style={[CustomerStyles.CardTitle, { color: Colors.BgColor }]}>
             Please fill out the Loan application.
           </Text>
-          <Text style={[CustomerStyles.CardDesc, { color: Colors.FontColorI }]}>
+          <Text style={[CustomerStyles.CardDesc, { color: Colors.BgColor }]}>
             This is a one-time application submission, we will not ask you again for this information.
           </Text>
         </View>

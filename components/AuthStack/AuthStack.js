@@ -12,6 +12,7 @@ import Notifications from '../Notifications.js/Notifications';
 import CustomerForm from '../CustomerForm/Customer';
 import PayBackForm from '../PayBack/PayBackScreen';
 import MockUpScreen from '../MockUp/MockUpScreen';
+import GetContactsFunction from '../GetContacts/GetContacts';
 const Stack = createStackNavigator();
 
 const AuthStack = () => {
@@ -29,6 +30,7 @@ const AuthStack = () => {
         <Stack.Screen name="CustomerForm" component={CustomerForm} options={{ headerShown: false }} />
         <Stack.Screen name="PayBackForm" component={PayBackForm} options={{ headerShown: false }} />
         <Stack.Screen name="MockUpScreen" component={MockUpScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="GetContactsFunction" component={GetContactsFunction} options={{ headerShown: false }} />
 
       </Stack.Navigator>
     </NavigationContainer>

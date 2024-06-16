@@ -291,6 +291,48 @@ async function getLoanList(uid){
         }
 
 
+
+
+
+
+
+
+
+        async function PostContacts(uid,contcactData){
+console.log(uid,"dsdasds",contcactData)
+          const myHeaders = new Headers();
+          myHeaders.append("Content-Type", "application/json");
+          
+          const raw = JSON.stringify({
+            "user_id": uid,
+            "contacts": contcactData
+          });
+          
+          const requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow"
+          };
+          
+        try{
+        
+          const response = await fetch(`${BaseUrl}upload-contacts`,requestOptions)
+          const result = await response.json()
+         
+          return result
+        
+        }
+        catch(e){
+          console.log(e)
+        Alert.alert("Error","Somethig Went Wrong, Try again later")
+        return null
+        
+        }
+        
+        }
+
+
 export {
   Login_Call,
   RegisterCall,
@@ -300,5 +342,6 @@ export {
   getLoanList,
   getDepositList,
   getNotifications,
-  getUserData
+  getUserData,
+  PostContacts
 }
