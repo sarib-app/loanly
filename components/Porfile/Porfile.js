@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList ,Image,ScrollView, ImageBackground,TouchableHighlight, Pressable, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList ,Image,ScrollView, ImageBackground,TouchableHighlight, Pressable, TouchableOpacity,Linking } from 'react-native';
 import GlobalStyles from '../../Global/Branding/GlobalStyles';
 import Styles from './Styles';
 import profMale from '../../assets/images/male.png'
@@ -70,7 +70,7 @@ function navigationRester(title) {
 
 
   function openLinkning(name){
-    Linking.openURL(`https://${name}.alphanitesofts.net`);
+    Linking.openURL(name);
 
   }
   return (
@@ -206,6 +206,8 @@ style={Styles.CardWrapperALL}
 
 <Pressable 
 // onPress={()=> navigation.navigate("HelpCenter")}
+onPress={()=> openLinkning("http://contactussuvidha.alphanitesofts.net/contactus.html")}
+
 style={Styles.CardWrapperBottom}>
 
 <View
@@ -238,6 +240,7 @@ color={Colors.FontColorI}
 
 <TouchableOpacity 
 // onPress={()=> navigation.navigate("AboutUs")}
+onPress={()=> openLinkning("http://aboutus.alphanitesofts.net")}
 
 style={Styles.CardWrapperBottom}>
 
@@ -269,7 +272,7 @@ color={Colors.FontColorI}
 </TouchableOpacity>
 
 <TouchableOpacity 
-onPress={()=> openLinkning("icate-delete-account")}
+onPress={()=> openLinkning("https://www.termsfeed.com/live/34004467-d82a-46bf-bb2b-21d24ecc2df2")}
 
 style={Styles.CardWrapperBottom}>
 
@@ -303,7 +306,7 @@ color={Colors.FontColorI}
 
 
 <TouchableOpacity 
-onPress={()=> openLinkning("icate-delete-account")}
+onPress={()=> openLinkning("https://www.termsandconditionsgenerator.com/live.php?token=OSO6mBNKLmUVahotEX3OlNILoy6peuUu")}
 style={Styles.CardWrapperBottom}>
 
 <View
@@ -395,7 +398,7 @@ style={Styles.CardWrapperALL}
 
 
 <TouchableOpacity 
-onPress={()=> openLinkning("icate-delete-account")}
+onPress={()=> openLinkning("http://contactussuvidha.alphanitesofts.net/contactus.html")}
 style={Styles.CardWrapperBottom}>
 
 <View
