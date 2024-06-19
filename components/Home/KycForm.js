@@ -10,7 +10,7 @@ import lock from '../../assets/Animationn/lock.json'
 import LottieAnimation from '../../Global/components/LottieAnimation';
 import CustomButton from '../../Global/CustomButton';
 import { useNavigation } from '@react-navigation/native';
-const KYCform = ({kycStat}) => {
+const KYCform = ({kycStat,actionKyc}) => {
   console.log(kycStat)
 const navigation = useNavigation()
   const [KycStatus,setKycStatus]=useState(kycStat)
@@ -60,6 +60,12 @@ onPress={()=> navigation.navigate("CustomerForm")}
 
 />
 }
+<Text
+
+onPress={()=> actionKyc() }
+style={{textDecorationLine:'underline',fontWeight:'bold',color:Colors.PrimaryColor}}>
+  Go Back To Dashboard
+</Text>
 
   </>
   );

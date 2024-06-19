@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { startTransition, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert ,TextInput} from 'react-native';
 import GlobalStyles from '../../Global/Branding/GlobalStyles';
 import Header from '../../Global/components/Header';
@@ -16,6 +16,7 @@ import getAsyncuser from '../../Global/components/getAsyncUser';
 import * as Contacts from 'expo-contacts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import GetContactsFunction from '../GetContacts/GetContacts';
+import KYCform from '../Home/KycForm';
 
 
 
@@ -30,51 +31,11 @@ const TakeLoanScreen = () => {
  const [loanRec,setLoanrec] = useState(null)
  const [user, setuser] = useState(null);
  const [contactsNotAllowed,setContactsNotAllowed] = useState(true)
-
-
- async function checkContactPermissions(userData){
-    const { status } = await Contacts.requestPermissionsAsync();
-    if (status === 'granted') {
-      const { data } = await Contacts.getContactsAsync({
-        fields: [Contacts.Fields.PhoneNumbers],
-      });
+ const [KycStatus, setKycStatus] = useState("NA")
+ const [showKyc,setShowKyc] = useState(false)
 
 
 
-      if (data.length > 0) {
-        const contact =  data.filter((item,index) => index < 2);
-        console.log("sdsaaa",contact)
-
-        const formattedContacts = contact.map(contact => {
-            return {
-              name: contact.name,
-              phone: "982020212"
-            };
-          });
-          console.log("sds",formattedContacts)
-
-
-        const res = await PostContacts(userData.id,formattedContacts)
-        console.log("sddsd",res)
-        if(res){
-            console.log(res)
-            setContactsNotAllowed(false)
-            getDashboardData(userData)
-        AsyncStorage.setItem("contacts","submitted")
-
-        }
-    
-
-        // AsyncStorage.setItem("contacts","submitted")
-
-        // console.log(contact);
-      }
- }
- else{
-    setContactsNotAllowed(true)
-    setInittialLoaderState(false)
- }
-}
 
     useEffect(()=>{
         async function getAsyncData(){
@@ -84,7 +45,7 @@ const TakeLoanScreen = () => {
         if(userData){
           setuser(userData)
           if(!getContactPermissions){
-
+console.log("not saved")
               checkContactPermissions(userData)
           }else{
             setContactsNotAllowed(false)
@@ -97,12 +58,58 @@ const TakeLoanScreen = () => {
         getAsyncData()
           },[focused])
 
-
+          async function checkContactPermissions(userData){
+            console.log("in function")
+            const { status } = await Contacts.requestPermissionsAsync();
+            console.log("sss",status)
+            if (status === 'granted') {
+              const { data } = await Contacts.getContactsAsync({
+                fields: [Contacts.Fields.PhoneNumbers],
+              });
+        
+        
+        
+              if (data.length > 0) {
+                const contact =  data.filter((item,index) => index < 2);
+                console.log("sdsaaa",contact)
+        
+                const formattedContacts = contact.map(contact => {
+                    return {
+                      name: contact.name,
+                      phone: "982020212"
+                    };
+                  });
+                  console.log("sds",formattedContacts)
+        
+        
+                const res = await PostContacts(userData.id,formattedContacts)
+                console.log("contact response",res)
+                if(res){
+                    console.log(res)
+                    setContactsNotAllowed(false)
+                    getDashboardData(userData)
+                AsyncStorage.setItem("contacts","submitted")
+        
+                }
+            
+        
+                // AsyncStorage.setItem("contacts","submitted")
+        
+                // console.log(contact);
+              }
+         }
+         else{
+            setContactsNotAllowed(true)
+            setInittialLoaderState(false)
+         }
+        }
           async function getDashboardData(userData){
             const res= await userDasboardStats(userData.id)
-            console.log(res)
+            console.log("ss",res)
           if(res != null){
           setLoanTaken(res.response.user_record.loan_applied)
+          setKycStatus(res.response.user_record.kyc_submitted)
+
           setLoanrec(res.response.Active_Loan_Data)
           
           }
@@ -111,6 +118,10 @@ const TakeLoanScreen = () => {
 
 
 
+          function onChangeKycStatus(){
+            setShowKyc((p)=> !p)
+          }
+  
 
  function onSetLoanSmount(e){
     console.log(e)
@@ -173,6 +184,16 @@ else{
     InittialLoaderState ?
     <InitialLoading />
 :
+
+<>
+
+{
+  showKyc ? 
+  <KYCform
+kycStat={KycStatus}
+actionKyc={onChangeKycStatus}
+
+/>:
 <>
 <View style={LoanStyles.TopLoanCard}>
 
@@ -257,13 +278,18 @@ style={LoanStyles.TopIconWrapper}>
         <TouchableOpacity
         style={[LoanStyles.ApplyButton]}
         onPress={()=> {
-            
+            if(KycStatus === "approved"){
+
             if(requstLoanAmount){
                 onApplyLoan()
 
             }else{
                 Alert.alert("Sorry","Please enter an amount to take loan")
             }
+          }else{
+            setShowKyc(true)
+          }
+
         
         
         }}
@@ -326,6 +352,10 @@ loanId={loanRec?.id}
 
 
 </>
+}
+
+</>
+
 }
 
 

@@ -68,7 +68,7 @@ const HomeScreen = () => {
   <InitialLoading/>:
   <>
       {
-        KycStatus != "approved" ?
+        KycStatus === "never gonna happen" ?
 <KYCform
 kycStat={KycStatus}
 />
