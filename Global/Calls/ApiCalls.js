@@ -333,6 +333,39 @@ console.log(uid,"dsdasds",contcactData)
         }
 
 
+
+
+
+
+        async function CalculateAmount(amount,duration){
+          const formdata = new FormData();
+
+          formdata.append("amount", amount?amount:0);
+          formdata.append("duration",duration);
+          
+          const requestOptions = {
+            method: "POST",
+            body: formdata,
+            redirect: "follow"
+          };
+        
+        try{
+        
+          const response = await fetch(`${BaseUrl}calculate-return-amount`,requestOptions)
+          const result = await response.json()
+         
+          return result
+        
+        }
+        catch(e){
+          console.log(e)
+        Alert.alert("Error","Somethig Went Wrong, Try again later")
+        return null
+        
+        }
+        
+        }
+
 export {
   Login_Call,
   RegisterCall,
@@ -343,5 +376,6 @@ export {
   getDepositList,
   getNotifications,
   getUserData,
-  PostContacts
+  PostContacts,
+  CalculateAmount
 }

@@ -23,7 +23,7 @@ style={{width:300,height:300}}
 />
 
 <Text style={{textAlign:'left',fontWeight:'bold',fontSize:30,margin:20,color:Colors.FontColorI,alignSelf:'flex-start',width:"70%"}}>
-    Subhida - place for getting easy loans
+    Suvhida - place for getting easy loans
 </Text>
 
 

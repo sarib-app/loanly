@@ -31,7 +31,8 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "This app requires you to allow photos to use them for verification and other reasons."
+          "photosPermission": "This app requires you to allow photos to use them for verification and other reasons.",
+          "cameraPermission": "Allow Suvhida to access your camera."
         }
       ],
       [

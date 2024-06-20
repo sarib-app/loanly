@@ -43,7 +43,7 @@ const CustomerForm = ({  }) => {
   };
 
   const handleSubmit = () => {
-    if(firstName && lastName && middleName && dateOfBirth && address && monthlyIncome && accountNumber && employmentType && AdharCard && selfie && PanCard ){
+    if(firstName && lastName  && dateOfBirth && address && monthlyIncome && accountNumber && employmentType && AdharCard && selfie && PanCard ){
 
       postRequest()
     }else{
@@ -144,7 +144,7 @@ const CustomerForm = ({  }) => {
 
 
   return (
-    <View style={[GlobalStyles.Container,{paddingBottom:20}]}>
+    <View style={[GlobalStyles.Container,{paddingBottom:50}]}>
       <Header name={"Give All Details"} />
       <ScrollView
       showsVerticalScrollIndicator={false}
@@ -178,7 +178,7 @@ const CustomerForm = ({  }) => {
         placeholder="Middle Name"
         value={middleName}
         onChangeText={setMiddleName}
-        pressed={isPressed}
+        pressed={false}
       />
 
       <InputTitle value="Last Name" />

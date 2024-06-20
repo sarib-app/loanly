@@ -8,7 +8,7 @@ import { Entypo } from '@expo/vector-icons';
 import InputField from '../../Global/components/InputField';
 import InputTitle from '../../Global/components/InputTitle';
 import BillsCard from './BillsCard';
-import { ApplyLoan, PostContacts, userDasboardStats } from '../../Global/Calls/ApiCalls';
+import { ApplyLoan, CalculateAmount, PostContacts, userDasboardStats } from '../../Global/Calls/ApiCalls';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import LoadingModal from '../../Global/components/LoadingModal';
 import InitialLoading from '../../Global/components/InitialLoading';
@@ -33,8 +33,25 @@ const TakeLoanScreen = () => {
  const [contactsNotAllowed,setContactsNotAllowed] = useState(true)
  const [KycStatus, setKycStatus] = useState("NA")
  const [showKyc,setShowKyc] = useState(false)
+ const [resturnAmount,setReturnAmount]=useState(0)
+ const [calculating,setCalculating]=useState(false)
+ 
 
+useEffect(()=>{
+async function calLoan(){
+  setCalculating(true)
+  const res = await CalculateAmount(requstLoanAmount,period*30)
+  console.log(res)
+  if(res){
+    setReturnAmount(res.total_return_amount)
+  }
+  setCalculating(false)
+}
+if(requstLoanAmount > 0){
 
+  calLoan()
+}
+},[period,requstLoanAmount])
 
 
     useEffect(()=>{
@@ -45,9 +62,9 @@ const TakeLoanScreen = () => {
         if(userData){
           setuser(userData)
           if(!getContactPermissions){
-console.log("not saved")
-              checkContactPermissions(userData)
+            checkContactPermissions(userData)
           }else{
+            console.log("not saved")  
             setContactsNotAllowed(false)
 
             getDashboardData(userData)
@@ -306,8 +323,8 @@ style={LoanStyles.TopIconWrapper}>
     <Text style={{color:Colors.danger,fontSize:12,fontWeight:'600',alignSelf:'center',textAlign:"center"
     }}>You already have pending or approved loan request</Text>
     :
-    <Text style={{color:Colors.danger,fontSize:12,fontWeight:'600',alignSelf:'center',textAlign:"center"
-    }}>3000 will be charged per day after 40 days</Text>
+    <Text style={{color:Colors.send,fontSize:12,fontWeight:'600',alignSelf:'center',textAlign:"center",marginTop:10
+    }}>  {calculating ?"Calculating....": resturnAmount.toFixed(0)+" "+"would be estimated returning amount"} </Text>
 }
 
       

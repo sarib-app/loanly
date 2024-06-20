@@ -7,7 +7,7 @@ import { WindowWidth } from './Dimensions';
 const InputField = ({ icon, placeholder, secureTextEntry, keyboardType, value, editable,onChangeText ,pressed
 }) => {
   return (
-    <View style={[styles.container,{borderColor:pressed == true && !value ?Colors.danger:Colors.placeHolder }]}>
+    <View style={[styles.container,{borderColor:pressed == true && !value ?Colors.danger:Colors.placeHolder,borderWidth:pressed == true && !value ? 0.5:0.3  }]}>
       <Ionicons name={icon} size={24} color={Colors.PrimaryColor} style={styles.icon} />
       <TextInput
         style={styles.input}
