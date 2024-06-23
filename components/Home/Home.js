@@ -59,8 +59,8 @@ const HomeScreen = () => {
     <View style={GlobalStyles.Container}>
       <Header
         name={"Dasboard"}
-        TxtColor={KycStatus === "approved"? Colors.BgColor:Colors.FontColorI}
-        color={KycStatus === "approved"? Colors.PrimaryColor:Colors.BgColor}
+        TxtColor={Colors.Dark}
+        color={Colors.PrimaryColor}
       />
 
 {

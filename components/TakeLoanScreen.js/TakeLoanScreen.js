@@ -35,15 +35,21 @@ const TakeLoanScreen = () => {
  const [showKyc,setShowKyc] = useState(false)
  const [resturnAmount,setReturnAmount]=useState(0)
  const [calculating,setCalculating]=useState(false)
+ const [calculateMessage,setCalculateMessage]=useState("")
  
 
 useEffect(()=>{
 async function calLoan(){
   setCalculating(true)
   const res = await CalculateAmount(requstLoanAmount,period*30)
-  console.log(res)
+  console.log("dsds",res)
   if(res){
-    setReturnAmount(res.total_return_amount)
+    if(res.status != "400"){
+      setReturnAmount(res.total_return_amount)
+      setCalculateMessage("")
+    }else{
+      setCalculateMessage(res.message)
+    }
   }
   setCalculating(false)
 }
@@ -167,10 +173,17 @@ if(requstLoanAmount+1 <= 150000){
  }
 
  async function onApplyLoan(){
-setLoading(true)
-if(!requstLoanAmount,!period){
+if(!requstLoanAmount || !period){
+  // setCalculateMessage("Amount should be between 1000 and 150000")
+  
     return
 }
+if(requstLoanAmount < 1000 || requstLoanAmount > 150000){
+  setCalculateMessage("Amount should be between 1000 and 150000")
+  return
+}
+setLoading(true)
+
 const duration = period*30
 
   const res = await ApplyLoan(user.id,requstLoanAmount,duration)
@@ -295,17 +308,19 @@ style={LoanStyles.TopIconWrapper}>
         <TouchableOpacity
         style={[LoanStyles.ApplyButton]}
         onPress={()=> {
-            if(KycStatus === "approved"){
+          onApplyLoan()
 
-            if(requstLoanAmount){
-                onApplyLoan()
+          //   if(KycStatus === "approved"){
 
-            }else{
-                Alert.alert("Sorry","Please enter an amount to take loan")
-            }
-          }else{
-            setShowKyc(true)
-          }
+          //   if(requstLoanAmount){
+          //       onApplyLoan()
+
+          //   }else{
+          //       Alert.alert("Sorry","Please enter an amount to take loan")
+          //   }
+          // }else{
+          //   setShowKyc(true)
+          // }
 
         
         
@@ -323,8 +338,17 @@ style={LoanStyles.TopIconWrapper}>
     <Text style={{color:Colors.danger,fontSize:12,fontWeight:'600',alignSelf:'center',textAlign:"center"
     }}>You already have pending or approved loan request</Text>
     :
-    <Text style={{color:Colors.send,fontSize:12,fontWeight:'600',alignSelf:'center',textAlign:"center",marginTop:10
-    }}>  {calculating ?"Calculating....": resturnAmount.toFixed(0)+" "+"would be estimated returning amount"} </Text>
+    <>
+    {
+      calculateMessage ? 
+      <Text style={{color:Colors.danger,fontSize:12,fontWeight:'600',alignSelf:'center',textAlign:"center",marginTop:10
+      }}> {calculateMessage} </Text>
+:    <Text style={{color:Colors.send,fontSize:12,fontWeight:'600',alignSelf:'center',textAlign:"center",marginTop:10
+    }}>  {calculating ?"Calculating....": resturnAmount.toFixed()+" "+"would be estimated returning amount"} </Text>
+  }
+
+</>
+
 }
 
       
