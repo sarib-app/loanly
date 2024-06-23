@@ -51,7 +51,8 @@ const navigation = useNavigation()
   KycStatus == "pending"?
   <CustomButton 
 title={"Kyc Under Review"}
-onPress={()=> Alert.alert("Already submitted","You already have submitted KYC, please for it to get approved.")}
+// onPress={()=> Alert.alert("Already submitted","You already have submitted KYC, please for it to get approved.")}
+onPress={()=> navigation.navigate("CustomerForm")}
 
 />:
 <CustomButton 

@@ -32,7 +32,10 @@ const ImageUpload = ({ onSelect,value }) => {
     });
 
     if (!result.canceled) {
+
         onSelect(result.assets[0].uri);
+  console.log("from photo",result.assets[0].uri)
+
         setModal(false)
     }
   };
@@ -58,6 +61,7 @@ const ImageUpload = ({ onSelect,value }) => {
     if (!response.canceled) {
       const { uri, base64 } = response.assets[0];
   let formattedUri = uri;
+  console.log("from came",formattedUri)
   onSelect(formattedUri);
   setModal(false)
   // Check if the platform is iOS
