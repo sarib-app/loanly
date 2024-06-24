@@ -3,11 +3,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const BaseUrl = "https://firstcredit.alphanitesofts.net/api/"
 import { useNavigation } from "@react-navigation/native";
 import { Alert } from "react-native";
-async function Login_Call(phone,password){
+async function Login_Call(phone,password,deviceId){
 
 const formdata = new FormData();
 formdata.append("phone", phone);
 formdata.append("password", password);
+formdata.append("deviceId", deviceId);
 
 const requestOptions = {
   method: "POST",
@@ -33,7 +34,7 @@ return null
 
 
 
-async function RegisterCall(phone,password,email,name){
+async function RegisterCall(phone,password,email,name,deviceId){
 
     const formdata = new FormData();
     formdata.append("phone", phone);
@@ -41,6 +42,7 @@ async function RegisterCall(phone,password,email,name){
     formdata.append("password_confirmation", password);
     formdata.append("email", email);
     formdata.append("name", name);
+    formdata.append("deviceId", deviceId);
     
     const requestOptions = {
       method: "POST",
@@ -53,7 +55,7 @@ try{
 
     const response = await fetch(`${BaseUrl}register`,requestOptions)
     const result = await response.json()
-   
+    console.log(result)
     return result
 
 }

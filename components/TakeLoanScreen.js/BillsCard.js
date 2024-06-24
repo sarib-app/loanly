@@ -75,7 +75,7 @@ import { useNavigation } from '@react-navigation/native';
           onPress={()=> {
             // navigation.navigate("PayBackForm",{identifier:identifier,leftAmount:leftAmount,LoanTaken:LoanTaken,loanId:loanId})
 
-            if(loanStat === "approved"){
+            if(loanStat === "in_progress"){
 
               navigation.navigate("PayBackForm",{identifier:identifier,leftAmount:leftAmount,LoanTaken:LoanTaken,loanId:loanId})
             

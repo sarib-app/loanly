@@ -308,19 +308,19 @@ style={LoanStyles.TopIconWrapper}>
         <TouchableOpacity
         style={[LoanStyles.ApplyButton]}
         onPress={()=> {
-          onApplyLoan()
+          // onApplyLoan()
 
-          //   if(KycStatus === "approved"){
+            if(KycStatus === "approved"){
 
-          //   if(requstLoanAmount){
-          //       onApplyLoan()
+            if(requstLoanAmount){
+                onApplyLoan()
 
-          //   }else{
-          //       Alert.alert("Sorry","Please enter an amount to take loan")
-          //   }
-          // }else{
-          //   setShowKyc(true)
-          // }
+            }else{
+                Alert.alert("Sorry","Please enter an amount to take loan")
+            }
+          }else{
+            setShowKyc(true)
+          }
 
         
         

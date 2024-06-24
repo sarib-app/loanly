@@ -32,11 +32,16 @@ const CustomerForm = ({  }) => {
   const [loading, setLoading] = useState(false);
 
   const [AdharCard, setAdharCard] = useState(null);
+  const [BaseAdharCard, setbaseAdharCard] = useState(null);
 
   const [user, setuser] = useState(null);
 
   const [PanCard, setPanCard] = useState(null);
+  const [BasePanCard, setBasePanCard] = useState(null);
+  
   const [selfie, setSelfie] = useState(null);
+  const [BaseSelfie, setBaseSelfie] = useState(null);
+
   const handleDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || dateOfBirth;
     setShowDatePicker(Platform.OS === 'ios');
@@ -44,23 +49,7 @@ const CustomerForm = ({  }) => {
   };
 
 
-  const moveImage = async (cameraImageUri) => {
-    try {
-      const { name, type } = await FileSystem.getInfoAsync(cameraImageUri);
-      const newUri = await FileSystem.moveAsync({
-        from: cameraImageUri, // Ensure correct URI from camera image
-        to: `${FileSystem.documentDirectory}${name}`, // Use documentDirectory
-      });
-  
-      console.log('Image moved successfully:', newUri);
-      console.log(newUri)
-      return newUri; // Return the new URI for upload
-    } catch (error) {
-      console.error('Error moving image:', error);
-      return null; // Indicate error (optional)
-    }
-  };
-
+ 
   const handleSubmit = () => {
     if(firstName && lastName  && dateOfBirth && address && monthlyIncome && accountNumber && employmentType && AdharCard && selfie && PanCard ){
 
@@ -85,59 +74,62 @@ const CustomerForm = ({  }) => {
     formData.append('monthly_income', monthlyIncome);
     formData.append('account_number', accountNumber);
     formData.append('employment_type', employmentType);
+    formData.append('aadhar_card_photo', BaseAdharCard);
+    formData.append('pan_card_photo', BasePanCard);
+    formData.append('selfie', BaseSelfie);
 
-    if (AdharCard) {
+    // if (AdharCard) {
 
-      // const fileUri = await FileSystem.copyAsync({
-      //   from: AdharCard,
-      //   to: `${FileSystem.documentDirectory}photos/${Date.now()}.jpg`
-      // });
-      // // const aadharFile = await FileSystem.getInfoAsync(aadharCard);
-      // formData.append('aadhar_card_photo', {
-      //   uri: fileUri.uri,
-      //   type: 'image/jpeg',
-      //   name: `aadhar_card_photo-${Date.now()}.jpg`,
-      // });
+    //   // const fileUri = await FileSystem.copyAsync({
+    //   //   from: AdharCard,
+    //   //   to: `${FileSystem.documentDirectory}photos/${Date.now()}.jpg`
+    //   // });
+    //   // // const aadharFile = await FileSystem.getInfoAsync(aadharCard);
+    //   // formData.append('aadhar_card_photo', {
+    //   //   uri: fileUri.uri,
+    //   //   type: 'image/jpeg',
+    //   //   name: `aadhar_card_photo-${Date.now()}.jpg`,
+    //   // });
       
-      // const { name, type } = await FileSystem.getInfoAsync(AdharCard);
-      // const newUri = await FileSystem.copyAsync({ AdharCard }, FileSystem.documentDirectory + name);
+    //   // const { name, type } = await FileSystem.getInfoAsync(AdharCard);
+    //   // const newUri = await FileSystem.copyAsync({ AdharCard }, FileSystem.documentDirectory + name);
 
-      // const filename = newUri.split('/').pop();
+    //   // const filename = newUri.split('/').pop();
       
-      const { uri: cameraImageUri, name, type } = await FileSystem.getInfoAsync(AdharCard);
-      const newUri = await FileSystem.moveAsync({
-        from: cameraImageUri,
-        to: `${FileSystem.documentDirectory}${name}`,
-      });
+    //   const { uri: cameraImageUri, name, type } = await FileSystem.getInfoAsync(AdharCard);
+    //   const newUri = await FileSystem.moveAsync({
+    //     from: cameraImageUri,
+    //     to: `${FileSystem.documentDirectory}${name}`,
+    //   });
 
-      const filename = await newUri.split('/').pop();
-      const typeis = await `image/${filename.split('.').pop()}`
+    //   const filename = await newUri.split('/').pop();
+    //   const typeis = await `image/${filename.split('.').pop()}`
 
-      formData.append('aadhar_card_photo', {
+    //   formData.append('aadhar_card_photo', {
         
-        uri:newUri,
-        name: filename,
-        type: typeis,
-      });
-    }
+    //     uri:newUri,
+    //     name: filename,
+    //     type: typeis,
+    //   });
+    // }
 
-    if (PanCard) {
-      // const panFile = await FileSystem.getInfoAsync(PanCard);
-      formData.append('pan_card_photo', {
-        uri: PanCard,
-        type: 'image/jpeg',
-        name: 'pan_card_photo.jpg',
-      });
-    }
+    // if (PanCard) {
+    //   // const panFile = await FileSystem.getInfoAsync(PanCard);
+    //   formData.append('pan_card_photo', {
+    //     uri: PanCard,
+    //     type: 'image/jpeg',
+    //     name: 'pan_card_photo.jpg',
+    //   });
+    // }
 
-    if (selfie) {
-      // const selfieFile = await FileSystem.getInfoAsync(selfie);
-      formData.append('selfie', {
-        uri: selfie,
-        type: 'image/jpeg',
-        name: 'selfie.jpg',
-      });
-    }
+    // if (selfie) {
+    //   // const selfieFile = await FileSystem.getInfoAsync(selfie);
+    //   formData.append('selfie', {
+    //     uri: selfie,
+    //     type: 'image/jpeg',
+    //     name: 'selfie.jpg',
+    //   });
+    // }
 
     try {
       const response = await fetch('https://firstcredit.alphanitesofts.net/api/add_user_add', {
@@ -150,7 +142,7 @@ const CustomerForm = ({  }) => {
       const result = await response.json();
       if(result.status === "200"){
         Alert.alert("Success", result.message)
-        navigation.goBack()
+        navigation.navigate("BottomNavigation")
       }else if(result.status === "401"){
         Alert.alert("Error",result.message)
       }
@@ -187,6 +179,21 @@ const CustomerForm = ({  }) => {
       getAsyncData()
         },[])
 
+
+function onSelectAdhaarCard(uri,base64){
+setAdharCard(uri)
+setbaseAdharCard(base64)
+}
+function onSelectpanCard(uri,base64){
+  setPanCard(uri)
+  setBasePanCard(base64)
+  }
+  function onSelectSelfie(uri,base64){
+    setSelfie(uri)
+    setBaseSelfie(base64)
+    }
+    
+  
 
   return (
     <View style={[GlobalStyles.Container,{paddingBottom:50}]}>
@@ -300,7 +307,7 @@ const CustomerForm = ({  }) => {
       />
       <ImageUpload 
     //   label={"dd"}
-      onSelect={setAdharCard}
+      onSelect={onSelectAdhaarCard}
       value={AdharCard}
       />
      <InputTitle 
@@ -308,7 +315,7 @@ const CustomerForm = ({  }) => {
       />
       <ImageUpload 
     //   label={"dd"}
-      onSelect={setPanCard}
+      onSelect={onSelectpanCard}
       value={PanCard}
       />
        <InputTitle 
@@ -316,13 +323,13 @@ const CustomerForm = ({  }) => {
       />
       <ImageUpload 
     //   label={"dd"}
-      onSelect={setSelfie}
+      onSelect={onSelectSelfie}
       value={selfie}
       />
 
-      <CustomButton title="Submit Application" onPress={moveImage} />
+      <CustomButton title="Submit Application" onPress={handleSubmit} />
       <LoadingModal 
-      show={false}
+      show={loading}
       />
       </ScrollView>
 

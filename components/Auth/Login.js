@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Alert, Image } from 'react-native';
 import InputField from '../../Global/components/InputField';
 import CustomButton from '../../Global/CustomButton';
@@ -12,12 +12,27 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingModal from '../../Global/components/LoadingModal';
 import Ellipse from "../../assets/images/Ellipse.png"
 import EllipseII from "../../assets/images/EllipseII.png"
+import DeviceInfo from 'react-native-device-info';
+import { getUniqueId, getManufacturer } from 'react-native-device-info';
+
+import * as Device from 'expo-device';
 const LoginScreen = ({ navigation }) => {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [isPressed, setIspressed] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [deviceId, setDeviceId] = useState(null);
 
+
+  // let deviceId = DeviceInfo.getUniqueId()
+
+useEffect(()=>{
+  DeviceInfo.getUniqueId().then((e)=>{
+    setDeviceId(e)
+  })
+// console.log(DeviceInfo)
+
+},[])
 
 async function handleLogin(){
   // navigation.navigate("BottomNavigation")
@@ -31,7 +46,7 @@ async function handleLogin(){
 
 async function LoginCall(){
   setLoading(true)
-  const result = await Login_Call(phone,password)
+  const result = await Login_Call(phone,password,deviceId)
 if(result === null){
   Alert.alert("Error","Someting Went Wrong!")
   setLoading(false)

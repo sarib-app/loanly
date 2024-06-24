@@ -155,7 +155,7 @@ const DashboardScreen = ({loanTaken,loanRec,depositRec}) => {
         </View>
         <TouchableOpacity 
         onPress={()=>{
-          // navigation.navigate("TakeLoanScreen")
+          navigation.navigate("TakeLoanScreen")
 
           if(loanTaken === "pending"){
             
@@ -169,7 +169,7 @@ const DashboardScreen = ({loanTaken,loanRec,depositRec}) => {
 
         style={HomeStyles.ApplyButton}>
           <Text style={{color:Colors.BgColor}}>
-            {loanTaken === "pending"?"In review":loanTaken === "approved"?"Pay Back":"Apply Now"}
+            {loanTaken === "pending"?"In review":loanTaken === "in_progress"?"Pay Back":"Apply Now"}
           </Text>
         </TouchableOpacity>
 
@@ -184,8 +184,8 @@ const DashboardScreen = ({loanTaken,loanRec,depositRec}) => {
         identifier={"Loan"}
         titleII={"Total Loan"}
         route={"LoanHistoryScreen"}
-        amount={loanRec?.total_loan_taken || "--"}
-        interest={loanRec?.total_interest_applied || "--"}
+        amount={loanRec?.total_loan_taken || "0"}
+        interest={loanRec?.total_interest_applied || "0"}
       />
 
       <InputTitle

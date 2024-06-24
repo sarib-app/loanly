@@ -28,12 +28,13 @@ const ImageUpload = ({ onSelect,value }) => {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       // allowsEditing: true,
       // aspect: [4, 3],
+      base64:true,
+
       quality: 1,
     });
 
     if (!result.canceled) {
-
-        onSelect(result.assets[0].uri);
+        onSelect(result.assets[0].uri,result.assets[0].base64);
         setModal(false)
     }
   };
@@ -52,6 +53,7 @@ const ImageUpload = ({ onSelect,value }) => {
 
     let result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      base64:true,
       // allowsEditing: true,
       // aspect: [4, 3],
       quality: 1,
@@ -59,10 +61,10 @@ const ImageUpload = ({ onSelect,value }) => {
 
     // console.log(result);
     
-    if (!response.canceled) {
-      const { uri, base64 } = response.assets[0];
+    if (!result.canceled) {
+      const { uri, base64 } = result.assets[0];
   let formattedUri = uri;
-  onSelect(formattedUri);
+  onSelect(formattedUri,base64);
   setModal(false)
   // Check if the platform is iOS
   // if (Platform.OS === 'ios') {

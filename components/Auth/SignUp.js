@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import InputField from '../../Global/components/InputField';
 import CustomButton from '../../Global/CustomButton';
@@ -9,6 +9,7 @@ import Colors from '../../Global/Branding/colors';
 import { RegisterCall } from '../../Global/Calls/ApiCalls';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingModal from '../../Global/components/LoadingModal';
+import DeviceInfo from 'react-native-device-info';
 
 const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -20,7 +21,19 @@ const SignupScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
 
 
+  const [deviceId, setDeviceId] = useState(null);
 
+
+  // let deviceId = DeviceInfo.getUniqueId()
+
+useEffect(()=>{
+  DeviceInfo.getUniqueId().then((e)=>{
+    setDeviceId(e)
+    
+  })
+// console.log(DeviceInfo)
+
+},[])
 
 
 
@@ -35,7 +48,7 @@ const SignupScreen = ({ navigation }) => {
   
   async function Register_Call(){
     setLoading(true)
-    const result = await RegisterCall(phone,password,email,name)
+    const result = await RegisterCall(phone,password,email,name,deviceId)
   if(result === null){
     Alert.alert("Error","Someting Went Wrong!")
     setLoading(false)

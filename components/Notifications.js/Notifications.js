@@ -72,11 +72,11 @@ function Notifications(){
 
         <View style={[GlobalStyles.ColumnAligner,{alignItems:'flex-start'}]}>
             <InputTitle
-            value={"Payment Approved"}
+            value={item?.title}
             style={{marginLeft:0}}
             />
-            <Text style={{color:"rgba(255,255,255,0.5)",width:"40%"}}>
-                Your recent request for loan request has been approved please check your dashboard for update
+            <Text style={{color:Colors.FontColorI,width:"40%"}}>
+                {item?.body}
             </Text>
         </View>
 
