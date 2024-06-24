@@ -32,9 +32,8 @@ const ImageUpload = ({ onSelect,value }) => {
     });
 
     if (!result.canceled) {
-        onSelect(result.assets[0].uri);
-  console.log("pic",result.assets[0].uri)
 
+        onSelect(result.assets[0].uri);
         setModal(false)
     }
   };
@@ -58,11 +57,19 @@ const ImageUpload = ({ onSelect,value }) => {
       quality: 1,
     });
 
-    if (!result.canceled) {
-        onSelect(result.assets[0].uri);
-  console.log("pic",result.assets[0].uri)
+    // console.log(result);
+    
+    if (!response.canceled) {
+      const { uri, base64 } = response.assets[0];
+  let formattedUri = uri;
+  onSelect(formattedUri);
+  setModal(false)
+  // Check if the platform is iOS
+  // if (Platform.OS === 'ios') {
+  //   // Handle iOS file path format
+  //   formattedUri =  uri.replace('file://', '');
+  // }
 
-        setModal(false)
     }
   };
 

@@ -15,6 +15,7 @@ import ImageUpload from '../../Global/components/ImageUpload';
 import { useNavigation } from '@react-navigation/native';
 import LoadingModal from '../../Global/components/LoadingModal';
 import getAsyncuser from '../../Global/components/getAsyncUser';
+import * as FileSystem from 'expo-file-system';
 
 const CustomerForm = ({  }) => {
   const navigation = useNavigation()
@@ -40,6 +41,24 @@ const CustomerForm = ({  }) => {
     const currentDate = selectedDate || dateOfBirth;
     setShowDatePicker(Platform.OS === 'ios');
     setDateOfBirth(currentDate);
+  };
+
+
+  const moveImage = async (cameraImageUri) => {
+    try {
+      const { name, type } = await FileSystem.getInfoAsync(cameraImageUri);
+      const newUri = await FileSystem.moveAsync({
+        from: cameraImageUri, // Ensure correct URI from camera image
+        to: `${FileSystem.documentDirectory}${name}`, // Use documentDirectory
+      });
+  
+      console.log('Image moved successfully:', newUri);
+      console.log(newUri)
+      return newUri; // Return the new URI for upload
+    } catch (error) {
+      console.error('Error moving image:', error);
+      return null; // Indicate error (optional)
+    }
   };
 
   const handleSubmit = () => {
@@ -68,11 +87,37 @@ const CustomerForm = ({  }) => {
     formData.append('employment_type', employmentType);
 
     if (AdharCard) {
-      // const aadharFile = await FileSystem.getInfoAsync(aadharCard);
+
+      // const fileUri = await FileSystem.copyAsync({
+      //   from: AdharCard,
+      //   to: `${FileSystem.documentDirectory}photos/${Date.now()}.jpg`
+      // });
+      // // const aadharFile = await FileSystem.getInfoAsync(aadharCard);
+      // formData.append('aadhar_card_photo', {
+      //   uri: fileUri.uri,
+      //   type: 'image/jpeg',
+      //   name: `aadhar_card_photo-${Date.now()}.jpg`,
+      // });
+      
+      // const { name, type } = await FileSystem.getInfoAsync(AdharCard);
+      // const newUri = await FileSystem.copyAsync({ AdharCard }, FileSystem.documentDirectory + name);
+
+      // const filename = newUri.split('/').pop();
+      
+      const { uri: cameraImageUri, name, type } = await FileSystem.getInfoAsync(AdharCard);
+      const newUri = await FileSystem.moveAsync({
+        from: cameraImageUri,
+        to: `${FileSystem.documentDirectory}${name}`,
+      });
+
+      const filename = await newUri.split('/').pop();
+      const typeis = await `image/${filename.split('.').pop()}`
+
       formData.append('aadhar_card_photo', {
-        uri: AdharCard,
-        type: 'image/jpeg',
-        name: 'aadhar_card_photo.jpg',
+        
+        uri:newUri,
+        name: filename,
+        type: typeis,
       });
     }
 
@@ -275,9 +320,9 @@ const CustomerForm = ({  }) => {
       value={selfie}
       />
 
-      <CustomButton title="Submit Application" onPress={handleSubmit} />
+      <CustomButton title="Submit Application" onPress={moveImage} />
       <LoadingModal 
-      show={loading}
+      show={false}
       />
       </ScrollView>
 
