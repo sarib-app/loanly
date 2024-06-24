@@ -33,6 +33,8 @@ const ImageUpload = ({ onSelect,value }) => {
 
     if (!result.canceled) {
         onSelect(result.assets[0].uri);
+  console.log("pic",result.assets[0].uri)
+
         setModal(false)
     }
   };
@@ -42,30 +44,25 @@ const ImageUpload = ({ onSelect,value }) => {
 
   const onSelectLiveImage =async () => {
   
-    await ImagePicker.requestCameraPermissionsAsync()
-    let response = await ImagePicker.launchCameraAsync({
-      
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      Alert.alert("You've refused to allow this app to access your camera!");
+      return;
+    }
+
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       // allowsEditing: true,
-      base64: true,
-      // aspect: [aspectRatio, 1], // Set the aspect ratio dynamically
-      // aspect:[]
+      // aspect: [4, 3],
       quality: 1,
     });
 
-    // console.log(result);
-    
-    if (!response.canceled) {
-      const { uri, base64 } = response.assets[0];
-  let formattedUri = uri;
-  onSelect(formattedUri);
-  setModal(false)
-  // Check if the platform is iOS
-  // if (Platform.OS === 'ios') {
-  //   // Handle iOS file path format
-  //   formattedUri =  uri.replace('file://', '');
-  // }
+    if (!result.canceled) {
+        onSelect(result.assets[0].uri);
+  console.log("pic",result.assets[0].uri)
 
+        setModal(false)
     }
   };
 
