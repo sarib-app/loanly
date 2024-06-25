@@ -42,6 +42,7 @@ const HomeScreen = () => {
 
         async function getDashboardData(userData){
           const res= await userDasboardStats(userData.id)
+          console.log(res)
         if(res != null){
           console.log(res.response.user_record)
           setKycStatus(res.response.user_record.kyc_submitted)
