@@ -111,7 +111,7 @@ const DashboardScreen = ({loanTaken,loanRec,depositRec}) => {
           Maximum Amount
         </Text>
         <Text style={HomeStyles.TopCardTitle}>
-        ₹ 50,0000
+        ₹ 150,0000
         </Text>
         </View>
         <TouchableOpacity

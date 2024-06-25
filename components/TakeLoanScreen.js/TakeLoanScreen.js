@@ -366,10 +366,10 @@ style={{marginLeft:30,margin:10,marginBottom:0,fontSize:16}}
 title={"Full Payment"}
 subtitle={"Pay full amount: "}
 identifier={"Full"}
-titleII={"Amount Left"}
+titleII={"Amount Paid"}
 LoanTaken={loanRec?.active_loan_amount || 0}
-leftAmount={loanRec?.pending_amount || 0}
-interest={loanRec?.active_interest_applied || 0}
+leftAmount={loanRec?.paid_amount || 0}
+interest={loanRec?.pending_amount || 0 }
 loanStat={loanTaken}
 
 loanId={loanRec?.id}
@@ -384,7 +384,9 @@ identifier={"Installment"}
 titleII={"Amount Paid"}
 LoanTaken={loanRec?.active_loan_amount || 0 }
 leftAmount={loanRec?.paid_amount || 0}
-interest={loanRec?.active_interest_applied || 0 }
+// interest={loanRec?.active_interest_applied || 0 }
+interest={loanRec?.pending_amount || 0 }
+
 loanStat={loanTaken}
 loanId={loanRec?.id}
 

@@ -15,13 +15,14 @@ import ImageUpload from '../../Global/components/ImageUpload';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import getAsyncuser from '../../Global/components/getAsyncUser';
 import { ReturnAmountApi } from '../../Global/Calls/ApiCalls';
+import LoadingModal from '../../Global/components/LoadingModal';
 
 const PayBackForm = ({ route }) => {
 const {identifier} = route.params
 const {leftAmount} = route.params
 const {LoanTaken} = route.params
 const {loanId} = route.params
-
+const [loading,setLoading]=useState(false)
 const navigation = useNavigation()
 const focused = useIsFocused()
 // console.log(identifier)
@@ -58,11 +59,13 @@ getAsyncData()
   };
 
 async function submitReturn(){
-  
+  setLoading(true)
 const res = await ReturnAmountApi(user.id,loanId,LoanTaken,TransactionId,ReturnAmount,identifier)
 console.log(res)
+setLoading(false)
 if(res){
   if(res.status === "200"){
+    
     Alert.alert("Paid","Amount paid request is generated it will be approved soon")
     navigation.goBack()
   }
@@ -95,7 +98,7 @@ if(res){
 
 
       <InputTitle value="Bank Type" />
-      <View style={styles.pickerContainer}>
+      <View style={[styles.pickerContainer,{borderColor:!AccountType && isPressed ? Colors.danger:Colors.placeHolder}]}>
         <Picker
           selectedValue={AccountType}
           onValueChange={(itemValue) => setAccountType(itemValue)}
@@ -141,7 +144,9 @@ if(res){
 
       <CustomButton title="Pay Now" onPress={handleSubmit} />
       </ScrollView> 
-
+<LoadingModal 
+show={loading}
+/>
     </View>
   );
 };

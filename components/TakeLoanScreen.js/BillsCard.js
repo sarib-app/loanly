@@ -100,7 +100,7 @@ import { useNavigation } from '@react-navigation/native';
 
           <RowRecord
             value={interest}
-            title={"Total Interest"}
+            title={"Pending Dues"}
             param={"₹ "}
 
           // style={{marginLeft:20}}
@@ -218,7 +218,7 @@ export default BillsCard;
 
 //           <RowRecord
 //             value={"0.3%"}
-//             title={"Total Interest"}
+//             title={"Pending Dues"}
 //           // style={{marginLeft:20}}
 //           />
 
