@@ -36,6 +36,7 @@ const WindowWidth = Dimensions.get('screen').width
         marginTop: 20,
         textDecorationLine: 'underline',
         position:'absolute',
+        textAlign:'center',
         bottom:50
       },
       loginText: {

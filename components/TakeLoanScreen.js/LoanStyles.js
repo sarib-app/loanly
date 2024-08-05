@@ -36,6 +36,14 @@ TopLoanCard:{
   borderRadius:20,
   backgroundColor:Colors.Dark
 },
+InfoCard:{
+  width:WindowWidth/1.05,
+//   height:WindowHeight/3.7,
+  padding:20,
+  marginTop:10,
+  borderRadius:10,
+  backgroundColor:Colors.Dark
+},
 TopCardTitle:{ fontSize: 20, fontWeight: 'bold', color: Colors.FontColorI },
 TopIconWrapper:{padding:12,backgroundColor:Colors.SeconderyColor,borderRadius:5,justifyContent:'center',alignItems:'center'},
 

@@ -167,7 +167,7 @@ const DashboardScreen = ({loanTaken,loanRec,depositRec}) => {
         }}
         // onPress={()=> navigation.navigate("CustomerForm")}
 
-        style={HomeStyles.ApplyButton}>
+          style={HomeStyles.ApplyButton}>
           <Text style={{color:Colors.BgColor}}>
             {loanTaken === "pending"?"In review":loanTaken === "in_progress"?"Pay Back":"Apply Now"}
           </Text>

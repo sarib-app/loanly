@@ -23,7 +23,7 @@
         "android.permission.RECORD_AUDIO"
       ],
       "package": "com.subhidaapp.app",
-      "versionCode": 3
+      "versionCode": 4
     },
     "web": {
       "favicon": "./assets/favicon.png"

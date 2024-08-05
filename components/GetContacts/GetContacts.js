@@ -55,7 +55,7 @@ export default function GetContactsFunction({
         source={Contacts}
         />
     <CustomButton title="Give Contact Permissions" onPress={() => {onPress()}} />
-<Text style={{textAlign:'center',marginHorizontal:30}}>You can not take loan without giving contact permission, please be sure that you have given contact permission!</Text>
+<Text style={{textAlign:'center',marginHorizontal:30}}>We require you to allow permissions to contact in order to take loan, we require this for security purpose. Thankyou {":-)"}</Text>
 
     </View>
     </Modal>

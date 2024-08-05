@@ -4,7 +4,7 @@ import GlobalStyles from '../../Global/Branding/GlobalStyles';
 import Header from '../../Global/components/Header';
 import LoanStyles from './LoanStyles';
 import Colors from '../../Global/Branding/colors';
-import { Entypo } from '@expo/vector-icons';
+import { Entypo, FontAwesome } from '@expo/vector-icons';
 import InputField from '../../Global/components/InputField';
 import InputTitle from '../../Global/components/InputTitle';
 import BillsCard from './BillsCard';
@@ -17,6 +17,8 @@ import * as Contacts from 'expo-contacts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import GetContactsFunction from '../GetContacts/GetContacts';
 import KYCform from '../Home/KycForm';
+import LoanTerms from '../LoanInfoModals/LoanTerms';
+import LoanCalModal from '../LoanInfoModals/LoanCalModal';
 
 
 
@@ -31,6 +33,9 @@ const TakeLoanScreen = () => {
  const [loanRec,setLoanrec] = useState(null)
  const [user, setuser] = useState(null);
  const [contactsNotAllowed,setContactsNotAllowed] = useState(true)
+ const [loanTermsModal,setloanTermsModal] = useState(false)
+ const [loanCalculationModal,setloanCalculationModal] = useState(false)
+
  const [KycStatus, setKycStatus] = useState("NA")
  const [showKyc,setShowKyc] = useState(false)
  const [resturnAmount,setReturnAmount]=useState(0)
@@ -68,7 +73,9 @@ if(requstLoanAmount > 0){
         if(userData){
           setuser(userData)
           if(!getContactPermissions){
-            checkContactPermissions(userData)
+            // checkContactPermissions(userData)
+            setContactsNotAllowed(true)
+            setInittialLoaderState(false)
           }else{
             console.log("not saved")  
             setContactsNotAllowed(false)
@@ -104,12 +111,14 @@ if(requstLoanAmount > 0){
                   });
                   console.log("sds",formattedContacts)
         
+                  setInittialLoaderState(true)
         
                 const res = await PostContacts(userData.id,formattedContacts)
                 console.log("contact response",res)
                 if(res){
                     console.log(res)
                     setContactsNotAllowed(false)
+                    setInittialLoaderState(false)
                     getDashboardData(userData)
                 AsyncStorage.setItem("contacts","submitted")
         
@@ -354,6 +363,25 @@ style={LoanStyles.TopIconWrapper}>
       
 
 </View>
+<View style={LoanStyles.InfoCard}>
+  <View style={GlobalStyles.RowMaker}>
+  <FontAwesome name="warning" size={18} color={"#FF7700"} />
+
+<InputTitle 
+value={"Important information"}
+style={{marginLeft:10,margin:0,marginBottom:0,fontSize:16}}
+/>
+  </View>
+
+<Text 
+onPress={()=> setloanTermsModal(true)}
+style={{textDecorationLine:'underline'}}>Click here to view Loan terms</Text>
+<Text 
+onPress={()=> setloanCalculationModal(true)}
+
+style={{textDecorationLine:'underline'}}>Click here to view Loan calculations</Text>
+
+</View>
 <InputTitle 
 value={"Unpaid Bills"}
 style={{marginLeft:30,margin:10,marginBottom:0,fontSize:16}}
@@ -413,6 +441,16 @@ onPress={()=> checkContactPermissions(user)}
 }
 <LoadingModal 
 show={loading}
+/>
+
+<LoanTerms
+visible={loanTermsModal}
+onClose={()=> setloanTermsModal(false)}
+/>
+<LoanCalModal 
+visible={loanCalculationModal}
+onClose={()=> setloanCalculationModal(false)}
+
 />
 
     </View>

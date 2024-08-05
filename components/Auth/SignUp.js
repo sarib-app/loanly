@@ -114,8 +114,11 @@ useEffect(()=>{
       />
       <CustomButton title="Sign Up" onPress={() => { handleRegister() }} />
       <Text style={AuthStyles.signupText} onPress={() => navigation.navigate('Login')}>
-        Already have an account? Login
+        Already have an account? Login {"\n"}
       </Text>
+      {/* <Text style={AuthStyles.signupText} onPress={() => navigation.navigate('Login')}>
+      By Registering you agree to our Terms & Condition.
+      </Text> */}
       <LoadingModal 
       show={loading}
       />
