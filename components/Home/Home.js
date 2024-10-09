@@ -1,87 +1,92 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import GlobalStyles from '../../Global/Branding/GlobalStyles';
-import HeaderScreens from '../../Global/components/HeaderScreens';
 import Header from '../../Global/components/Header';
-import HomeStyles from './HomeStyles';
-import { Entypo, FontAwesome, FontAwesome6, Octicons } from '@expo/vector-icons';
-import Colors from '../../Global/Branding/colors';
-import lock from '../../assets/Animationn/lock.json'
-import LottieAnimation from '../../Global/components/LottieAnimation';
-import CustomButton from '../../Global/CustomButton';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
-import KYCform from './KycForm';
-import { WindowWidth } from '../../Global/components/Dimensions';
-import InputTitle from '../../Global/components/InputTitle';
-import DashboardScreen from './Dashboard';
-import { userDasboardStats } from '../../Global/Calls/ApiCalls';
-import InitialLoading from '../../Global/components/InitialLoading';
-import getAsyncuser from '../../Global/components/getAsyncUser';
+import HomeStyles from './HomeStyles';
+import tags from '../../Global/Jsons/Tags';
+import data from '../../Global/Jsons/Collection';
+import ImageList from './ImageLIst';
+import NodataFound from '../../Global/components/NoDataFound';
+
 const HomeScreen = () => {
   const navigation = useNavigation()
   const focused = useIsFocused()
-  const [KycStatus, setKycStatus] = useState("NA")
-  const [loanTaken,setLoanTaken] = useState("NA")
-  const [loanRec,setLoanrec] = useState(null)
-  const [depositRec,setDepositRec] = useState(null)
+  const [selected,setSelected]=useState("All")
 
-  const [loading,setLoading] = useState(true)
-  const [user, setuser] = useState(null);
+const filteredDAta = selected === "All" ? data : data.filter((item)=> item.tag.includes(selected))
 
   useEffect(()=>{
-      async function getAsyncData(){
-      
-      const userData = await getAsyncuser()
-      if(userData){
-        setuser(userData)
-        getDashboardData(userData)
-      }
-      }
-      getAsyncData()
+   
         },[focused])
 
-        async function getDashboardData(userData){
-          const res= await userDasboardStats(userData.id)
-        if(res != null){
-          console.log(res.response.user_record)
-          setKycStatus(res.response.user_record.kyc_submitted)
-          setLoanTaken(res.response.user_record.loan_applied)
-          setLoading(false)
-          setLoanrec(res.response.user_record.Loan)
-          setDepositRec(res.response.user_record.Deposit)
-        }
-        // setLoading(false)
-        }
-       
-
+ 
+function Tags_list({item}){
+  return(
+    <TouchableOpacity 
+    onPress={()=> setSelected(item.name)}
+    style={[HomeStyles.tagsWrapper,selected === item.name && HomeStyles.Tags_active]}>
+<Text style={[HomeStyles.tagsText,selected === item.name && HomeStyles.tags_active_txt]}>
+  {item.name}
+</Text>
+    </TouchableOpacity>
+  )
+}
 
   return (
     <View style={GlobalStyles.Container}>
       <Header
-        name={"Dasboard"}
-        TxtColor={KycStatus === "approved"? Colors.BgColor:Colors.FontColorI}
-        color={KycStatus === "approved"? Colors.PrimaryColor:Colors.BgColor}
+        name={"Home"}
       />
 
+      <View style={HomeStyles.tagsSection}> 
+<FlatList
+data={tags}
+horizontal={true}
+showsHorizontalScrollIndicator={false}
+renderItem={({item})=>{
+  return(
+<Tags_list
+item={item}
+/>
+  )
+}}
+/>
+
+
+      </View>
+
+
+
+
+
+{/*Image listing data*/}
+  {/* <View> */}
 {
-  loading === true ?
-  <InitialLoading/>:
-  <>
-      {
-        KycStatus != "approved" ?
-<KYCform
-kycStat={KycStatus}
-/>
-:
-<DashboardScreen
-loanTaken={loanTaken}
-loanRec={loanRec}
-depositRec={depositRec}
-/>
+  filteredDAta.length > 0 ?
+
+<FlatList
+data={filteredDAta}
+numColumns={2}
+renderItem={({item})=>{
+  return(
+
+ <ImageList
+ item={item}
+ />
+)
+
+}}
+/>:
+<NodataFound/>
 }
 
-</>
-}
+{/* </View> */}
+
+
+
+
+
 
     </View>
   );

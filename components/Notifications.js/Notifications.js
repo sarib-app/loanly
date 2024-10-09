@@ -16,28 +16,55 @@ import NodataFound from "../../Global/components/NoDataFound";
 function Notifications(){
   
 
-
+const data = [
+    {
+        id:1,
+        title:"Account Success",
+        body:"COngratulations your account created successfully"
+    },
+    {
+        id:2,
+        title:"Purchase Success",
+        body:"Congratulations! your subscription has been purchased successfully!"
+    },
+    {
+        id:3,
+        title:"New Content",
+        body:"We have added new content in gallery go and check them out."
+    },
+    {
+        id:4,
+        title:"Account Success",
+        body:"COngratulations your account created successfully."
+    },
+    {
+        id:5,
+        title:"Account Success",
+        body:"COngratulations your account created successfully."
+    },
+    
+]
 
     const focused = useIsFocused()
     const [notifList,setnotifList] =useState([])
     
-    const [loading,setLoading] =useState(true)
+    const [loading,setLoading] =useState(false)
     
     
     
     
     
     
-            useEffect(()=>{
-                async function getAsyncData(){
+            // useEffect(()=>{
+            //     async function getAsyncData(){
                 
-                const userData = await getAsyncuser()
-                if(userData){
-                    getNotifs(userData)
-                }
-                }
-                getAsyncData()
-                  },[focused])
+            //     const userData = await getAsyncuser()
+            //     if(userData){
+            //         getNotifs(userData)
+            //     }
+            //     }
+            //     getAsyncData()
+            //       },[focused])
     
     
     async function getNotifs(userData){
@@ -72,11 +99,11 @@ function Notifications(){
 
         <View style={[GlobalStyles.ColumnAligner,{alignItems:'flex-start'}]}>
             <InputTitle
-            value={"Payment Approved"}
+            value={item.title}
             style={{marginLeft:0}}
             />
-            <Text style={{color:"rgba(255,255,255,0.5)",width:"40%"}}>
-                Your recent request for loan request has been approved please check your dashboard for update
+            <Text style={{color:"rgba(0,0,0,0.6)",width:"60%"}}>
+                {item.body}
             </Text>
         </View>
 
@@ -102,10 +129,10 @@ function Notifications(){
                 <>
 
                 {
-                    notifList.length > 0 ?
+                    data.length > 0 ?
 
 <FlatList 
-data={notifList}
+data={data}
 renderItem={renderitems}
 />:
 <NodataFound/>

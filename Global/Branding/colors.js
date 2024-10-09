@@ -3,7 +3,7 @@ const Colors = {
     LightPrimary:"#3EA5EC",
     SeconderyColor:"#EBF0FD",
     placeHolder:"rgba(0,0,0,0.3)",
-    inActive:"rgba(255,255,255,0.5)",
+    inActive:"rgba(255,255,255,1)",
     FontColorI:"#04050B",
     FontColorII:"rgba(0,0,0,0.7)",
     
@@ -15,6 +15,7 @@ const Colors = {
     bgIII:"#232323",
     bgIv:"#303030",
     Dark:"white",
+    black:"black",
     send:"#1db954",
     deposit:"#FA754C"
 

@@ -11,6 +11,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Colors from '../../Global/Branding/colors';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Linking } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import Header from '../../Global/components/Header';
 import getAsyncuser from '../../Global/components/getAsyncUser';
@@ -180,7 +181,7 @@ style={Styles.IconWrapper}
 <Text
 style={GlobalStyles.textStyle}
 >
-  Kyc:   
+  Payment:   
 </Text>
 </View>
 <Text

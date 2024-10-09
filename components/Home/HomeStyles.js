@@ -7,61 +7,37 @@ import Colors from '../../Global/Branding/colors';
 const WindowWidth = Dimensions.get('screen').width
   const WindowHeight = Dimensions.get('screen').height; 
   const HomeStyles = StyleSheet.create({ 
-Card:{
-    width:WindowWidth/1.05,
-    // height:WindowHeight/7,
-    backgroundColor:Colors.Dark,
-    borderRadius:10,
-    elevation:10,
-    shadowColor:Colors.Dark,
-    padding:20
+tagsSection:{
+    width:WindowWidth/1.1,
+    // backgroundColor:"yellow"
 },
-CardTitle:{
-    fontWeight:'bold',
-    fontSize:16,
+tagsWrapper:{
+    backgroundColor:Colors.inActive,
+    shadowColor:Colors.black,
+    // shadowRadius:2,
+    shadowOpacity:1,
+    elevation:1,
+    paddingHorizontal:20,
+    paddingVertical:5,
+    borderRadius:20,
+    margin:5
+},
+tagsText:{
     color:Colors.FontColorI
 },
-CardDesc:{
-  fontWeight:'600',
-    fontSize:12,
-    color:Colors.placeHolder,
-    width:"40%",
+Tags_active:{
+    backgroundColor:Colors.PrimaryColor,
+    color:"blue"
 },
-TopLoanCard:{
-  width:WindowWidth,
-  // height:WindowHeight/3.7,
-  paddingHorizontal:20,
-  borderBottomLeftRadius:30,
-  borderBottomEndRadius:30,
-  backgroundColor:Colors.PrimaryColor
+tags_active_txt:{
+    color:Colors.inActive
 },
-TopCardTitle:{ fontSize: 35, fontWeight: 'bold', color: Colors.BgColor },
-ApplyButton:{
-  width:100,
-  height:50,
-  borderWidth:1,
-  borderColor:Colors.BgColor,
-  borderRadius:10,
-  alignItems:'center',
-  justifyContent:'center',
-  alignSelf:'center',
-  margin:20
-},
-ApplyButtonSmall:{
-  // width:100,
-  // height:50,
-  paddingVertical:10,
-  paddingHorizontal:20,
-  backgroundColor:Colors.LightPrimary,
-  borderWidth:1,
-  borderColor:Colors.BgColor,
-  borderRadius:10,
-  alignItems:'center',
-  justifyContent:'center',
-  alignSelf:'center',
-  // margin:20
+Image_cardStyle:{
+width:WindowWidth/2.4,
+height:200,
+backgroundColor:Colors.inActive,
+margin:5,
+borderRadius:10,
 }
-
-
   })
   export default HomeStyles

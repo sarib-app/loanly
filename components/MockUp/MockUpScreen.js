@@ -23,12 +23,12 @@ style={{width:300,height:300}}
 />
 
 <Text style={{textAlign:'left',fontWeight:'bold',fontSize:30,margin:20,color:Colors.FontColorI,alignSelf:'flex-start',width:"70%"}}>
-    Subhida - place for getting easy loans
+    Mselleo - place for getting easy images.
 </Text>
 
 
 <Text style={{textAlign:'left',fontWeight:'400',margin:20,marginTop:0,color:Colors.FontColorII,alignSelf:'flex-start',width:"70%"}}>
-    We provide interest free loans if you return within 40 days. Your loan is ready on single tap, Let's get started.
+    We provide 1M+ HD banners and images and 100+ services for your digital agencies, contact us.
 </Text>
 
 

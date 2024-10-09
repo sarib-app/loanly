@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "loanly",
-    "slug": "loanly",
+    "name": "Mselleo",
+    "slug": "Mselleo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -12,13 +12,18 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.meselleo.app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.meselleo.app"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -30,6 +35,11 @@
           "photosPermission": "This app requires you to allow photos to use them for verification and other reasons."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "ec931f8c-92f1-4086-9008-4e604112fb7a"
+      }
+    }
   }
 }
