@@ -13,7 +13,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.meselleo.app"
+      "bundleIdentifier": "com.meselleoo.app"
     },
     "android": {
       "adaptiveIcon": {
@@ -23,7 +23,7 @@
       "permissions": [
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.meselleo.app"
+      "package": "com.meselleoo.app"
     },
     "web": {
       "favicon": "./assets/favicon.png"
